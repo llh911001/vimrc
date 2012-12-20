@@ -6,7 +6,7 @@ syntax on " syntax highlighting on
 filetype plugin indent on " load filetype plugins and indent settings
 
 if has("gui_running")
-	colorscheme solarized
+	colorscheme desert
 	set guifont=Ubuntu\ Mono\ 13
 else
     colorscheme default
@@ -68,10 +68,12 @@ set whichwrap+=<,>,[,],h,l  " backspace and cursor keys wrap to
 "set shortmess=atI " shortens messages to avoid 'press a key' prompt
 set report=0 " tell us when anything is changed via :...
 set noerrorbells " don't make noise
-hi LineNr ctermbg=darkgrey ctermfg=grey " line number bg and fg schema
-" highlight the cursor current line
-set cursorline
+
+" highlight the cursor current line in current window
+autocmd VimEnter,WinEnter,BufWinEnter * setlocal cursorline
+autocmd WinLeave * setlocal nocursorline
 highlight CursorLine ctermbg=darkgrey cterm=bold
+highlight LineNr ctermbg=darkgrey ctermfg=grey " line number bg and fg schema
 "
 set list listchars=tab:\ \ ,trail:·,eol:¬ " mark trailing white space
 " }
@@ -138,9 +140,6 @@ let g:SuperTabDefaultCompletionType = "<C-x><C-o>"
 "let g:SuperTabDefaultCompletionType = "context"
 
 " Mappings {
-
-"inoremap " ""<Esc>i
-"inoremap ' ''<Esc>i
 
 " Count number of matches
 noremap ,c :%s///gn<CR>
