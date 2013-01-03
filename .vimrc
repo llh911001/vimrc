@@ -211,15 +211,6 @@ function LoadDjangoGoodies()
 			" if we are at /www/mysite/ we add to path /www and /www/mysite
 			" so can complete mysite.
 			let $PYTHONPATH .= ":/".join(split( getcwd(),'/')[0:-2],'/')."/:/".join(split( getcwd(),'/')[0:-1],'/')."/"
-			"
-			" If we are in a virtualenv
-			python << EOF
-import os, sys, vim
-vir_env = os.environ.get('VIRTUAL_ENV', '')
-if vir_env:
-	act_this = os.path.join(vir_env, 'bin/activate_this.py')
-	execfile(act_this, dict(__file__=act_this))
-EOF
 
 		endif
 	endif
@@ -235,13 +226,18 @@ function LoadPythonGoodies()
 		" path set
 		call LoadDjangoGoodies()
 
-		" set python path to vim
+		" set python path to vim, and virtualenv settings
     	python << EOF
 import os, sys, vim
 
 for p in sys.path:
     if os.path.isdir(p):
 		vim.command(r"set path+=%s" % (p.replace(" ", r"\ ")))
+
+vir_env = os.environ.get('VIRTUAL_ENV', '')
+if vir_env:
+	act_this = os.path.join(vir_env, 'bin/activate_this.py')
+	execfile(act_this, dict(__file__=act_this))
 EOF
 
 		" some nice adjustaments to show errors
