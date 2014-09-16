@@ -32,8 +32,6 @@ augroup resCur
 augroup END
 " END of restore cursor
 
-"autocmd VimEnter * TlistOpen
-"autocmd VimEnter * wincmd p
 let NERDTreeIgnore=['\.pyc', '\~$', '\.git', '\.hg', '\.svn', '\.dsp', '\.opt', '\.plg', '\.pdf']
 
 " General {
@@ -43,6 +41,7 @@ set fileformats=unix,dos,mac " support all three, in this order
 set viminfo+=! " make sure it can save viminfo
 set iskeyword+=_,$,@,%,# " none of these should be word dividers, so make them not be
 set nostartofline " leave my cursor where it was
+let mapleader=","
 " }
 
 " Files/Backups {
@@ -121,31 +120,36 @@ set nocursorcolumn " don't show the current column
 
 " Folding {
 set foldenable			" Turn on folding
-""set foldmarker={,}		" Fold C style code (only use this as default if you use a high foldlevel)
-""set foldcolumn=4		" Give 1 column for fold markers
-"""set foldopen-=search	" don't open folds when you search into them
-"""set foldopen-=undo		" don't open folds when you undo stuff
-set foldmethod=indent " Fold on the marker
-set foldnestmax=2
+"set foldmarker={,}		" Fold C style code (only use this as default if you use a high foldlevel)
+"set foldcolumn=4		" Give 1 column for fold markers
+""set foldopen-=search	" don't open folds when you search into them
+""set foldopen-=undo		" don't open folds when you undo stuff
+set foldmethod=indent   " Fold on the marker
+"set foldnestmax=2
 set foldlevel=1000 " Don't autofold anything (but I can still fold manually)
-let Tlist_Enable_Fold_Column = 0 " dont't give fold column to Tlist window
-" }
-
-
-" TagList open window {
-let Tlist_Show_One_File = 1
-let Tlist_Exit_OnlyWindow = 1
-let Tlist_Use_Right_Window = 1
+""let Tlist_Enable_Fold_Column = 0 " dont't give fold column to Tlist window
+""" }
+""
+""
+""" TagList open window {
+""let Tlist_Show_One_File = 1
+""let Tlist_Exit_OnlyWindow = 1
+""let Tlist_Use_Right_Window = 1
 " }
 
 " SuperTab
-let g:SuperTabDefaultCompletionType = "<C-x><C-o>"
+"let g:SuperTabDefaultCompletionType = "<C-x><C-o>"
 "let g:SuperTabDefaultCompletionType = "context"
 
 " Mappings {
 
 " Count number of matches
 noremap ,c :%s///gn<CR>
+
+inoremap ' ''<ESC>i
+inoremap " ""<ESC>i
+"inoremap { {}<ESC>i<CR><ESC>O
+
 
 " Switch window
 noremap <silent> <C-k> <C-W>k
@@ -155,11 +159,12 @@ noremap <silent> <C-l> <C-W>l
 
 " NERDTree and TagList
 noremap <F3> :NERDTreeToggle<CR>
-noremap <F4> :TlistToggle<CR>
+noremap <F4> :TagbarToggle<CR>
+noremap <F6> :PyLint<CR>
 
 " Indent
-noremap <F8> gg=G
-inoremap <F8> <ESC>mzgg=G`z<Insert>
+""noremap <F8> gg=G
+""inoremap <F8> <ESC>mzgg=G`z<Insert>
 
 " Tab navigation
 noremap <C-Right> :tabn<CR>
@@ -167,17 +172,19 @@ inoremap <C-Right> <esc>:tabn<CR><Insert>
 noremap <C-Left> :tabprev<CR>
 inoremap <C-Left> <ESC>tabprev<CR><Insert>
 " }
+"
 
-" Automatically quit vim if NERDTree and Tlist are the last and only buffers
+" Automatically quit vim if NERDTree and tagbar are the last and only buffers
 function NoExcitingBuffersLeft()
-	" if NERDTree and Tlist both left
+	" if NERDTree and tagbar both left
 	"if tabpagenr("$") == 1 && winnr("$") == 2 && exists("t:NERDTreeBufName")
 	if winnr("$") == 2 && exists("t:NERDTreeBufName")
 		let window1 = bufname(winbufnr(1))
 		let window2 = bufname(winbufnr(2))
-		if (window1 == t:NERDTreeBufName || window1 == "__Tag_List__") && (window2 == t:NERDTreeBufName || window2 == "__Tag_List__")
+		if (window1 == t:NERDTreeBufName || window1 == "__Tagbar__") && (window2 == t:NERDTreeBufName || window2 == "__Tagbar__")
 			q
 		endif
+		
 	endif
     " if only NERDTree left
     if winnr("$") == 1 && exists("b:NERDTreeType")
@@ -187,47 +194,16 @@ endfunction
 "
 autocmd bufenter * call NoExcitingBuffersLeft()
 
-function LoadDjangoGoodies()
+" disable py_lint on every write
+""let g:pymode_lint_write = 0
 
-	" Django customization
-	" it only works if we are at base of django site
-	if filewritable('settings.py')
-
-		" set DJANGO_SETTINGS_MODULE
-		let $DJANGO_SETTINGS_MODULE=split( getcwd(),'/')[-1].".settings"
-		" set right type of file, python.django for .py files,
-		" htmldjango.django_template.xhtml or htmldjango.django_template.html
-		" for html files. This bigname for html ft is to use both syntax of
-		" Dave Hodder and SnipMate of Michael Sanders (and xhtml/html goodies
-		" too)
-		let l:escapefromhere=0
-    	if &ft=="python"
-			set ft=python.django
-		elseif &ft=="html" || &ft=="xhtml"
-			set ft=htmldjango.html
-		else
-			let l:escapefromhere=1
-		endif
-
-		if l:escapefromhere == 0
-			" Set python path on enviroment, vim and python
-			" if we are at /www/mysite/ we add to path /www and /www/mysite
-			" so can complete mysite.
-			let $PYTHONPATH .= ":/".join(split( getcwd(),'/')[0:-2],'/')."/:/".join(split( getcwd(),'/')[0:-1],'/')."/"
-
-		endif
-	endif
-endfunction
-
+" let tagbar to be compact
+let g:tagbar_compact = 1
 
 " Python customization {
 function LoadPythonGoodies()
 
 	if &ft=="python"||&ft=="html"||&ft=="xhtml"
-
-		" settings for django, for something unknow we need to call before python
-		" path set
-		call LoadDjangoGoodies()
 
 		" set python path to vim, and virtualenv settings
     	python << EOF
@@ -288,3 +264,5 @@ if !exists("myautocmds")
 	autocmd CursorMovedI * if pumvisible() == 0|pclose|endif
 	autocmd InsertLeave * if pumvisible() == 0|pclose|endif
 endif
+
+let g:pymode_rope_autoimport_modules = ["os","shutil","datetime"]
