@@ -34,6 +34,19 @@ augroup END
 
 let NERDTreeIgnore=['\.pyc', '\~$', '\.git', '\.hg', '\.svn', '\.dsp', '\.opt', '\.plg', '\.pdf']
 
+" Mark trailing spaces
+match ErrorMsg '\s\+$'
+
+" Remove trailing spaces
+function! TrimTrailingSpaces()
+    %s/\s\+$//e
+endfunction
+
+"autocmd FileWritePre     * call TrimTrailingSpaces()
+"autocmd FileAppendPre    * call TrimTrailingSpaces()
+"autocmd FilterWritePre   * call TrimTrailingSpaces()
+"autocmd BufWritePre      * call TrimTrailingSpaces()
+
 " General {
 set history=1000 " How many lines of history to remember
 set clipboard+=unnamed " turns out I do like is sharing windows clipboard
@@ -130,18 +143,13 @@ set foldlevel=1000 " Don't autofold anything (but I can still fold manually)
 ""let Tlist_Enable_Fold_Column = 0 " dont't give fold column to Tlist window
 """ }
 ""
-""
-""" TagList open window {
-""let Tlist_Show_One_File = 1
-""let Tlist_Exit_OnlyWindow = 1
-""let Tlist_Use_Right_Window = 1
-" }
 
 " SuperTab
 "let g:SuperTabDefaultCompletionType = "<C-x><C-o>"
 "let g:SuperTabDefaultCompletionType = "context"
 
 " Mappings {
+noremap ,t :call TrimTrailingSpaces()<CR>
 
 " Count number of matches
 noremap ,c :%s///gn<CR>
@@ -184,7 +192,7 @@ function NoExcitingBuffersLeft()
 		if (window1 == t:NERDTreeBufName || window1 == "__Tagbar__") && (window2 == t:NERDTreeBufName || window2 == "__Tagbar__")
 			q
 		endif
-		
+
 	endif
     " if only NERDTree left
     if winnr("$") == 1 && exists("b:NERDTreeType")
@@ -220,18 +228,18 @@ if vir_env:
 EOF
 
 		" some nice adjustaments to show errors
-    	syn match pythonError "^\s*def\s\+\w\+(.*)\s*$" display 
-		syn match pythonError "^\s*class\s\+\w\+(.*)\s*$" display 
-		syn match pythonError "^\s*for\s.*[^:]\s*$" display 
-		syn match pythonError "^\s*except\s*$" display 
-		syn match pythonError "^\s*finally\s*$" display 
-		syn match pythonError "^\s*try\s*$" display 
-		syn match pythonError "^\s*else\s*$" display 
-		syn match pythonError "^\s*else\s*[^:].*" display 
-		"syn match pythonError "^\s*if\s.*[^\:]$" display 
-		syn match pythonError "^\s*except\s.*[^\:]$" display 
-		syn match pythonError "[;]$" display 
-		syn keyword pythonError         do  
+    	syn match pythonError "^\s*def\s\+\w\+(.*)\s*$" display
+		syn match pythonError "^\s*class\s\+\w\+(.*)\s*$" display
+		syn match pythonError "^\s*for\s.*[^:]\s*$" display
+		syn match pythonError "^\s*except\s*$" display
+		syn match pythonError "^\s*finally\s*$" display
+		syn match pythonError "^\s*try\s*$" display
+		syn match pythonError "^\s*else\s*$" display
+		syn match pythonError "^\s*else\s*[^:].*" display
+		"syn match pythonError "^\s*if\s.*[^\:]$" display
+		syn match pythonError "^\s*except\s.*[^\:]$" display
+		syn match pythonError "[;]$" display
+		syn keyword pythonError         do
 
     	let python_highlight_builtins = 1
     	let python_highlight_exceptions = 1
@@ -243,7 +251,7 @@ EOF
     	let python_highlight_doctests = 1
 
 		set ai tw=0 ts=4 sts=4 sw=4 et
-	
+
 	endif
 
 endfunction
