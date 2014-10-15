@@ -9,8 +9,8 @@ syntax on " syntax highlighting on
 filetype plugin indent on " load filetype plugins and indent settings
 
 if has("gui_running")
-	colorscheme desert
-	set guifont=Ubuntu\ Mono\ 13
+    colorscheme desert
+    set guifont=Ubuntu\ Mono\ 13
 else
     colorscheme default
     autocmd VimEnter * NERDTree
@@ -20,15 +20,15 @@ endif
 
 " When editing a file, always jump to the last cursor position
 function! ResCur()
-	if line("'\"") > 0 && line("'\"") <= line("$")
-		normal! g`"
-		return 1
-	endif
+    if line("'\"") > 0 && line("'\"") <= line("$")
+        normal! g`"
+        return 1
+    endif
 endfunction
 
 augroup resCur
-	autocmd!
-	autocmd BufWinEnter * call ResCur()
+    autocmd!
+    autocmd BufWinEnter * call ResCur()
 augroup END
 " END of restore cursor
 
@@ -132,11 +132,11 @@ set nocursorcolumn " don't show the current column
 " }
 
 " Folding {
-set foldenable			" Turn on folding
-"set foldmarker={,}		" Fold C style code (only use this as default if you use a high foldlevel)
-"set foldcolumn=4		" Give 1 column for fold markers
-""set foldopen-=search	" don't open folds when you search into them
-""set foldopen-=undo		" don't open folds when you undo stuff
+set foldenable        " Turn on folding
+"set foldmarker={,}        " Fold C style code (only use this as default if you use a high foldlevel)
+"set foldcolumn=4        " Give 1 column for fold markers
+""set foldopen-=search    " don't open folds when you search into them
+""set foldopen-=undo        " don't open folds when you undo stuff
 set foldmethod=indent   " Fold on the marker
 "set foldnestmax=2
 set foldlevel=1000 " Don't autofold anything (but I can still fold manually)
@@ -184,19 +184,19 @@ inoremap <C-Left> <ESC>tabprev<CR><Insert>
 
 " Automatically quit vim if NERDTree and tagbar are the last and only buffers
 function NoExcitingBuffersLeft()
-	" if NERDTree and tagbar both left
-	"if tabpagenr("$") == 1 && winnr("$") == 2 && exists("t:NERDTreeBufName")
-	if winnr("$") == 2 && exists("t:NERDTreeBufName")
-		let window1 = bufname(winbufnr(1))
-		let window2 = bufname(winbufnr(2))
-		if (window1 == t:NERDTreeBufName || window1 == "__Tagbar__") && (window2 == t:NERDTreeBufName || window2 == "__Tagbar__")
-			q
-		endif
+    " if NERDTree and tagbar both left
+    "if tabpagenr("$") == 1 && winnr("$") == 2 && exists("t:NERDTreeBufName")
+    if winnr("$") == 2 && exists("t:NERDTreeBufName")
+        let window1 = bufname(winbufnr(1))
+        let window2 = bufname(winbufnr(2))
+        if (window1 == t:NERDTreeBufName || window1 == "__Tagbar__") && (window2 == t:NERDTreeBufName || window2 == "__Tagbar__")
+            q
+        endif
 
-	endif
+    endif
     " if only NERDTree left
     if winnr("$") == 1 && exists("b:NERDTreeType")
-    	q
+        q
     endif
 endfunction
 "
@@ -211,66 +211,66 @@ let g:tagbar_compact = 1
 " Python customization {
 function LoadPythonGoodies()
 
-	if &ft=="python"||&ft=="html"||&ft=="xhtml"
+    if &ft=="python"||&ft=="html"||&ft=="xhtml"
 
-		" set python path to vim, and virtualenv settings
-    	python << EOF
+        " set python path to vim, and virtualenv settings
+        python << EOF
 import os, sys, vim
 
 for p in sys.path:
     if os.path.isdir(p):
-		vim.command(r"set path+=%s" % (p.replace(" ", r"\ ")))
+        vim.command(r"set path+=%s" % (p.replace(" ", r"\ ")))
 
 vir_env = os.environ.get('VIRTUAL_ENV', '')
 if vir_env:
-	act_this = os.path.join(vir_env, 'bin/activate_this.py')
-	execfile(act_this, dict(__file__=act_this))
+    act_this = os.path.join(vir_env, 'bin/activate_this.py')
+    execfile(act_this, dict(__file__=act_this))
 EOF
 
-		" some nice adjustaments to show errors
-    	syn match pythonError "^\s*def\s\+\w\+(.*)\s*$" display
-		syn match pythonError "^\s*class\s\+\w\+(.*)\s*$" display
-		syn match pythonError "^\s*for\s.*[^:]\s*$" display
-		syn match pythonError "^\s*except\s*$" display
-		syn match pythonError "^\s*finally\s*$" display
-		syn match pythonError "^\s*try\s*$" display
-		syn match pythonError "^\s*else\s*$" display
-		syn match pythonError "^\s*else\s*[^:].*" display
-		"syn match pythonError "^\s*if\s.*[^\:]$" display
-		syn match pythonError "^\s*except\s.*[^\:]$" display
-		syn match pythonError "[;]$" display
-		syn keyword pythonError         do
+        " some nice adjustaments to show errors
+        syn match pythonError "^\s*def\s\+\w\+(.*)\s*$" display
+        syn match pythonError "^\s*class\s\+\w\+(.*)\s*$" display
+        syn match pythonError "^\s*for\s.*[^:]\s*$" display
+        syn match pythonError "^\s*except\s*$" display
+        syn match pythonError "^\s*finally\s*$" display
+        syn match pythonError "^\s*try\s*$" display
+        syn match pythonError "^\s*else\s*$" display
+        syn match pythonError "^\s*else\s*[^:].*" display
+        "syn match pythonError "^\s*if\s.*[^\:]$" display
+        syn match pythonError "^\s*except\s.*[^\:]$" display
+        syn match pythonError "[;]$" display
+        syn keyword pythonError         do
 
-    	let python_highlight_builtins = 1
-    	let python_highlight_exceptions = 1
-    	let python_highlight_string_formatting = 1
-    	let python_highlight_string_format = 1
-    	let python_highlight_string_templates = 1
-    	let python_highlight_indent_errors = 1
-    	let python_highlight_space_errors = 1
-    	let python_highlight_doctests = 1
+        let python_highlight_builtins = 1
+        let python_highlight_exceptions = 1
+        let python_highlight_string_formatting = 1
+        let python_highlight_string_format = 1
+        let python_highlight_string_templates = 1
+        let python_highlight_indent_errors = 1
+        let python_highlight_space_errors = 1
+        let python_highlight_doctests = 1
 
-		set ai tw=0 ts=4 sts=4 sw=4 et
+        set ai tw=0 ts=4 sts=4 sw=4 et
 
-	endif
+    endif
 
 endfunction
 
 if !exists("myautocmds")
-	let g:myautocmds=1
+    let g:myautocmds=1
 
-	"call LoadPythonGoodies()
-	"autocmd Filetype python,html,xhtml call LoadPythonGoodies()
-	au BufNewFile,BufRead *.py,*.html call LoadPythonGoodies()
+    "call LoadPythonGoodies()
+    "autocmd Filetype python,html,xhtml call LoadPythonGoodies()
+    au BufNewFile,BufRead *.py,*.html call LoadPythonGoodies()
 
-	" Omni completion
-	autocmd FileType python set omnifunc=pythoncomplete#Complete
-	autocmd FileType javascript set omnifunc=javascriptcomplete#CompleteJS
-	autocmd FileType html set omnifunc=htmlcomplete#CompleteTags
-	autocmd FileType css set omnifunc=csscomplete#CompleteCSS
-	" Dissmiss PyDoc preview
-	autocmd CursorMovedI * if pumvisible() == 0|pclose|endif
-	autocmd InsertLeave * if pumvisible() == 0|pclose|endif
+    " Omni completion
+    autocmd FileType python set omnifunc=pythoncomplete#Complete
+    autocmd FileType javascript set omnifunc=javascriptcomplete#CompleteJS
+    autocmd FileType html set omnifunc=htmlcomplete#CompleteTags
+    autocmd FileType css set omnifunc=csscomplete#CompleteCSS
+    " Dissmiss PyDoc preview
+    autocmd CursorMovedI * if pumvisible() == 0|pclose|endif
+    autocmd InsertLeave * if pumvisible() == 0|pclose|endif
 endif
 
 let g:pymode_rope_autoimport_modules = ["os","shutil","datetime"]
