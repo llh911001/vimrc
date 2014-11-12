@@ -2,9 +2,6 @@
 set nocompatible " get out of horrible vi-compatible mode
 set background=dark " we are using a dark background
 set t_Co=16 " color numbers
-filetype off " call pathogen
-call pathogen#infect()
-call pathogen#helptags()
 syntax on " syntax highlighting on
 filetype plugin indent on " load filetype plugins and indent settings
 
@@ -111,9 +108,9 @@ set laststatus=2 " always show the status line
 set nosmartindent " smartindent (filetype indenting instead)
 set autoindent " autoindent (should be overwrote by cindent or filetype indent)
 set cindent " do c-style indenting
-set softtabstop=4 " unify
-set shiftwidth=4 " unify
-set tabstop=4 " real tabs should be 4, but they will show with set list on
+set softtabstop=2 " unify
+set shiftwidth=2 " unify
+set tabstop=2 " real tabs should be 4, but they will show with set list on
 set expandtab " use spaces instead of tab
 set smarttab " be smart when using tabs
 set copyindent " but above all -- follow the conventions laid before us
@@ -145,8 +142,8 @@ set foldlevel=1000 " Don't autofold anything (but I can still fold manually)
 ""
 
 " SuperTab
-"let g:SuperTabDefaultCompletionType = "<C-x><C-o>"
-"let g:SuperTabDefaultCompletionType = "context"
+let g:SuperTabDefaultCompletionType = "<C-x><C-o>"
+let g:SuperTabDefaultCompletionType = "context"
 
 " Mappings {
 noremap ,t :call TrimTrailingSpaces()<CR>
