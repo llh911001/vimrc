@@ -2,6 +2,7 @@
 set nocompatible " get out of horrible vi-compatible mode
 set background=dark " we are using a dark background
 set t_Co=16 " color numbers
+set encoding=utf-8
 syntax on " syntax highlighting on
 filetype plugin indent on " load filetype plugins and indent settings
 
