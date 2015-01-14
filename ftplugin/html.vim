@@ -44,6 +44,6 @@ endif
 
 setlocal shiftwidth=2
 setlocal tabstop=2
-autocmd VimEnter,WinEnter,BufWinEnter *.html set filetype=html
+autocmd VimEnter,BufWinEnter *.html set filetype=html
 
 " vim:ft=vim:fdm=marker

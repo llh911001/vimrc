@@ -20,6 +20,9 @@ setlocal omnifunc=csscomplete#CompleteCSS
 setlocal suffixesadd=.less
 setlocal comments=s1:/*,mb:*,ex:*/
 
+setlocal shiftwidth=2
+setlocal tabstop=2
+
 let &l:include = '^\s*@import\s\+\%(url(\)\=["'']\='
 
 " vim:set sw=2:
