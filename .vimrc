@@ -269,6 +269,8 @@ if !exists("myautocmds")
     " Dissmiss PyDoc preview
     autocmd CursorMovedI * if pumvisible() == 0|pclose|endif
     autocmd InsertLeave * if pumvisible() == 0|pclose|endif
+
 endif
 
-let g:pymode_rope_autoimport_modules = ["os","shutil","datetime"]
+""let g:pymode_rope_autoimport_modules = ["os","shutil","datetime"]
+let g:snippet_no_indentation_settings=1

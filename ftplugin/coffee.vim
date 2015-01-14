@@ -14,6 +14,8 @@ setlocal formatoptions-=t formatoptions+=croql
 setlocal comments=:# commentstring=#\ %s
 setlocal omnifunc=javascriptcomplete#CompleteJS
 setlocal suffixesadd+=coffee
+setlocal shiftwidth=2
+setlocal tabstop=2
 
 " Create custom augroups.
 augroup CoffeeBufUpdate | augroup END

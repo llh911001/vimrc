@@ -42,4 +42,8 @@ if !exists('b:SuperTabContextTextOmniPrecedence')
   let b:SuperTabContextTextOmniPrecedence = ['&omnifunc', '&completefunc']
 endif
 
+setlocal shiftwidth=2
+setlocal tabstop=2
+autocmd VimEnter,WinEnter,BufWinEnter *.html set filetype=html
+
 " vim:ft=vim:fdm=marker
