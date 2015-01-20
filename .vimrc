@@ -270,8 +270,6 @@ if !exists("myautocmds")
     autocmd CursorMovedI * if pumvisible() == 0|pclose|endif
     autocmd InsertLeave * if pumvisible() == 0|pclose|endif
 
-    " hack
-    autocmd BufWinEnter *.html,*.ejs set filetype=html
 endif
 
 ""let g:pymode_rope_autoimport_modules = ["os","shutil","datetime"]
