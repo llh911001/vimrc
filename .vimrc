@@ -1,18 +1,43 @@
 " Basics {
-set nocompatible " get out of horrible vi-compatible mode
+set nocompatible " get out of horrible vi-compatible mode *Vundle required*
+filetype off " *Vundle required*
+
+" Vundle
+set rtp+=~/.vim/bundle/Vundle.vim
+call vundle#begin()
+
+Plugin 'gmarik/Vundle.vim'
+
+Plugin 'scrooloose/nerdtree'
+Plugin 'scrooloose/syntastic'
+Plugin 'kien/ctrlp.vim'
+Plugin 'rking/ag.vim'
+Plugin 'majutsushi/tagbar'
+Plugin 'junegunn/vim-easy-align'
+Plugin 'mattn/emmet-vim'
+Plugin 'tpope/vim-surround'
+Plugin 'ervandew/supertab'
+Plugin 'MarcWeber/vim-addon-mw-utils'
+Plugin 'tomtom/tlib_vim'
+Plugin 'honza/vim-snipmate'
+Plugin 'pangloss/vim-javascript'
+Plugin 'kchmck/vim-coffee-script'
+Plugin 'groenewege/vim-less'
+
+call vundle#end()
+filetype plugin indent on " load filetype plugins and indent settings; *Vundle required*
+" end Vundle
+
 set background=dark " we are using a dark background
 set t_Co=16 " color numbers
 set encoding=utf-8
 syntax on " syntax highlighting on
-filetype plugin indent on " load filetype plugins and indent settings
 
 if has("gui_running")
-    colorscheme desert
-    set guifont=Ubuntu\ Mono\ 13
+    colorscheme solarized
+    set guifont=Monaco:h14
 else
     colorscheme default
-    autocmd VimEnter * NERDTree
-    autocmd VimEnter * wincmd p
 endif
 " }
 
@@ -85,7 +110,7 @@ set noerrorbells " don't make noise
 " highlight the cursor current line in current window
 autocmd VimEnter,WinEnter,BufWinEnter * setlocal cursorline
 autocmd WinLeave * setlocal nocursorline
-highlight CursorLine ctermbg=darkgrey cterm=bold
+highlight CursorLine ctermbg=black cterm=bold
 highlight LineNr ctermbg=darkgrey ctermfg=grey " line number bg and fg schema
 "
 set list listchars=tab:\ \ ,trail:·,eol:¬ " mark trailing white space
@@ -138,7 +163,6 @@ set foldenable        " Turn on folding
 set foldmethod=indent   " Fold on the marker
 "set foldnestmax=2
 set foldlevel=1000 " Don't autofold anything (but I can still fold manually)
-""let Tlist_Enable_Fold_Column = 0 " dont't give fold column to Tlist window
 """ }
 ""
 
@@ -147,10 +171,13 @@ let g:SuperTabDefaultCompletionType = "<C-x><C-o>"
 let g:SuperTabDefaultCompletionType = "context"
 
 " Mappings {
-noremap ,t :call TrimTrailingSpaces()<CR>
-
+noremap <leader>t :call TrimTrailingSpaces()<CR>
 " Count number of matches
-noremap ,c :%s///gn<CR>
+noremap <leader>c :%s///gn<CR>
+noremap <leader>a ^
+noremap <leader>e $
+noremap <leader>s :w<CR>
+noremap <leader>z :q<CR>
 
 inoremap ' ''<ESC>i
 inoremap " ""<ESC>i
@@ -163,10 +190,10 @@ noremap <silent> <C-j> <C-W>j
 noremap <silent> <C-h> <C-W>h
 noremap <silent> <C-l> <C-W>l
 
-" NERDTree and TagList
+" NERDTree and Tagbar
 noremap <F3> :NERDTreeToggle<CR>
+noremap <C-n> :NERDTreeToggle<CR>
 noremap <F4> :TagbarToggle<CR>
-noremap <F6> :PyLint<CR>
 
 " Indent
 ""noremap <F8> gg=G
@@ -199,6 +226,8 @@ function NoExcitingBuffersLeft()
 endfunction
 "
 autocmd bufenter * call NoExcitingBuffersLeft()
+autocmd VimEnter * NERDTree
+autocmd VimEnter * wincmd p
 
 " disable py_lint on every write
 ""let g:pymode_lint_write = 0
@@ -260,6 +289,7 @@ if !exists("myautocmds")
     "call LoadPythonGoodies()
     "autocmd Filetype python,html,xhtml call LoadPythonGoodies()
     au BufNewFile,BufRead *.py call LoadPythonGoodies()
+    au BufRead,BufNewFile *.md set filetype=markdown
 
     " Omni completion
     autocmd FileType python set omnifunc=pythoncomplete#Complete
