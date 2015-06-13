@@ -86,6 +86,18 @@ set sessionoptions+=localoptions " What should be saved during sessions being sa
 set sessionoptions+=resize " What should be saved during sessions being saved
 set sessionoptions+=winpos " What should be saved during sessions being saved
 " }
+"
+" The Silver Searcher
+if executable('ag')
+  " Use ag over grep
+  set grepprg=ag\ --nogroup\ --nocolor
+
+  " Use ag in CtrlP for listing files. Lightning fast and respects .gitignore
+  let g:ctrlp_user_command = 'ag %s -l --nocolor -g ""'
+
+  " ag is fast enough that CtrlP doesn't need to cache
+  let g:ctrlp_use_caching = 0
+endif
 
 " Vim UI {
 set popt+=syntax:y " Syntax when printing
@@ -171,13 +183,13 @@ let g:SuperTabDefaultCompletionType = "<C-x><C-o>"
 let g:SuperTabDefaultCompletionType = "context"
 
 " Mappings {
-noremap <leader>t :call TrimTrailingSpaces()<CR>
+noremap <Leader>t :call TrimTrailingSpaces()<CR>
 " Count number of matches
-noremap <leader>c :%s///gn<CR>
-noremap <leader>a ^
-noremap <leader>e $
-noremap <leader>s :w<CR>
-noremap <leader>z :q<CR>
+noremap <Leader>c :%s///gn<CR>
+noremap <Leader>a ^
+noremap <Leader>e $
+noremap <Leader>s :w<CR>
+noremap <Leader>z :q<CR>
 
 inoremap ' ''<ESC>i
 inoremap " ""<ESC>i
@@ -200,10 +212,10 @@ noremap <F4> :TagbarToggle<CR>
 ""inoremap <F8> <ESC>mzgg=G`z<Insert>
 
 " Tab navigation
-noremap <C-Right> :tabn<CR>
-inoremap <C-Right> <esc>:tabn<CR><Insert>
-noremap <C-Left> :tabprev<CR>
-inoremap <C-Left> <ESC>tabprev<CR><Insert>
+noremap <Leader>h :tabn<CR>
+inoremap <Leader>h <esc>:tabn<CR><Insert>
+noremap <Leader>l :tabprev<CR>
+inoremap <Leader>l <ESC>tabprev<CR><Insert>
 " }
 "
 
