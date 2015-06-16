@@ -17,13 +17,13 @@ Plugin 'junegunn/vim-easy-align'
 Plugin 'mattn/emmet-vim'
 Plugin 'tpope/vim-surround'
 Plugin 'ervandew/supertab'
+Plugin 'SirVer/ultisnips'
+Plugin 'honza/vim-snippets'
 Plugin 'Raimondi/delimitMate'
-Plugin 'MarcWeber/vim-addon-mw-utils'
-Plugin 'tomtom/tlib_vim'
-Plugin 'honza/vim-snipmate'
 Plugin 'pangloss/vim-javascript'
 Plugin 'kchmck/vim-coffee-script'
 Plugin 'groenewege/vim-less'
+Plugin 'matchit.zip'
 
 call vundle#end()
 filetype plugin indent on " load filetype plugins and indent settings; *Vundle required*
@@ -99,6 +99,9 @@ if executable('ag')
   " ag is fast enough that CtrlP doesn't need to cache
   let g:ctrlp_use_caching = 0
 endif
+
+let g:syntastic_javascript_checkers = ['standard']
+let g:syntastic_check_on_wq = 0
 
 " Vim UI {
 set popt+=syntax:y " Syntax when printing
@@ -303,6 +306,7 @@ if !exists("myautocmds")
     "autocmd Filetype python,html,xhtml call LoadPythonGoodies()
     au BufNewFile,BufRead *.py call LoadPythonGoodies()
     au BufRead,BufNewFile *.md set filetype=markdown
+    au BufRead,BufNewFile *.scss,*.less set filetype=css
 
     " Omni completion
     autocmd FileType python set omnifunc=pythoncomplete#Complete
@@ -314,6 +318,3 @@ if !exists("myautocmds")
     autocmd InsertLeave * if pumvisible() == 0|pclose|endif
 
 endif
-
-""let g:pymode_rope_autoimport_modules = ["os","shutil","datetime"]
-let g:snippet_no_indentation_settings=1
