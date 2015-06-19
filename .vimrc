@@ -100,8 +100,12 @@ if executable('ag')
   let g:ctrlp_use_caching = 0
 endif
 
+let b:syntastic_mode = 'passive'
 let g:syntastic_javascript_checkers = ['standard']
+let g:syntastic_html_checkers=['']
+let g:syntastic_check_on_open = 0
 let g:syntastic_check_on_wq = 0
+noremap <C-c> :SyntasticCheck<CR>
 
 " Vim UI {
 set popt+=syntax:y " Syntax when printing
@@ -194,11 +198,13 @@ noremap <Leader>a ^
 noremap <Leader>e $
 noremap <Leader>s :w<CR>
 noremap <Leader>z :q<CR>
+noremap <Leader>r :NERDTreeFind<CR>
 
 inoremap ' ''<ESC>i
 inoremap " ""<ESC>i
 "inoremap { {}<ESC>i<CR><ESC>O
 
+noremap \ :Ag<Space>
 
 " Switch window
 noremap <silent> <C-k> <C-W>k
@@ -221,7 +227,6 @@ inoremap <Leader>h <esc>:tabn<CR><Insert>
 noremap <Leader>l :tabprev<CR>
 inoremap <Leader>l <ESC>tabprev<CR><Insert>
 " }
-"
 
 " Automatically quit vim if NERDTree and tagbar are the last and only buffers
 function NoExcitingBuffersLeft()
@@ -306,7 +311,6 @@ if !exists("myautocmds")
     "autocmd Filetype python,html,xhtml call LoadPythonGoodies()
     au BufNewFile,BufRead *.py call LoadPythonGoodies()
     au BufRead,BufNewFile *.md set filetype=markdown
-    au BufRead,BufNewFile *.scss,*.less set filetype=css
 
     " Omni completion
     autocmd FileType python set omnifunc=pythoncomplete#Complete
