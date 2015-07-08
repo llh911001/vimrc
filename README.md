@@ -11,13 +11,10 @@
 # 安装
 
 1. 安装 `Vundle.vim`
-
 ```bash
 git clone https://github.com/llh911001/vimrc
 cd vimrc
 git submodule update --init
 ```
-
 1. 安装其他插件
-
 在 `vim`(>=7.4) 中执行 `:PluginInstall`
