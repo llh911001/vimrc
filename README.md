@@ -1,3 +1,7 @@
+# 效果图
+
+<img src="screenshot">
+
 # 插件
 
 1. 插件管理: [Vundle](https://github.com/gmarik/Vundle.vim)
