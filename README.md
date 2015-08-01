@@ -1,6 +1,6 @@
 # 效果图
 
-<img src="screenshot">
+<img src="screenshot.png">
 
 # 插件
 
