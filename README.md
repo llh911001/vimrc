@@ -1,6 +1,6 @@
 # 效果图
 
-<img src="screenshot.png">
+<img src="http://7xir1p.com1.z0.glb.clouddn.com/vim_screenshot.png">
 
 # 插件
 
@@ -14,7 +14,7 @@
 
 # 安装
 
-### 1.安装 `Vundle.vim`
+### 1. 安装 `Vundle.vim`
 ```bash
 git clone https://github.com/llh911001/vimrc
 cd vimrc
