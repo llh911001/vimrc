@@ -1,4 +1,4 @@
-# 效果图
+# 效果
 
 <img src="http://7xir1p.com1.z0.glb.clouddn.com/vim_screenshot.png">
 
@@ -16,8 +16,9 @@
 
 ### 1. 安装 `Vundle.vim`
 ```bash
-git clone https://github.com/llh911001/vimrc
-cd vimrc
+git clone https://github.com/llh911001/vimrc ~/.vim
+cd ~/.vim
+cp .vimrc ~/
 git submodule update --init
 ```
 
