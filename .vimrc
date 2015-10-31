@@ -57,6 +57,7 @@ augroup END
 " END of restore cursor
 
 let NERDTreeIgnore=['\.pyc', '\~$', '\.git', '\.hg', '\.svn', '\.dsp', '\.opt', '\.plg', '\.pdf']
+let NERDTreeMouseMode=2 " Single click to activate directory
 
 " Mark trailing spaces
 match ErrorMsg '\s\+$'
@@ -100,7 +101,7 @@ if executable('ag')
   let g:ctrlp_use_caching = 0
 endif
 
-let b:syntastic_mode = 'passive'
+let g:syntastic_mode_map = {'mode': 'passive'}
 let g:syntastic_javascript_checkers = ['standard']
 let g:syntastic_html_checkers=['']
 let g:syntastic_check_on_open = 0
@@ -126,6 +127,7 @@ set whichwrap+=<,>,[,],h,l  " backspace and cursor keys wrap to
 "set shortmess=atI " shortens messages to avoid 'press a key' prompt
 set report=0 " tell us when anything is changed via :...
 set noerrorbells " don't make noise
+set relativenumber
 
 " highlight the cursor current line in current window
 autocmd VimEnter,WinEnter,BufWinEnter * setlocal cursorline
