@@ -23,6 +23,7 @@ Plugin 'Raimondi/delimitMate'
 Plugin 'pangloss/vim-javascript'
 Plugin 'kchmck/vim-coffee-script'
 Plugin 'groenewege/vim-less'
+Plugin 'ap/vim-css-color'
 Plugin 'matchit.zip'
 
 call vundle#end()
@@ -30,7 +31,7 @@ filetype plugin indent on " load filetype plugins and indent settings; *Vundle r
 " end Vundle
 
 set background=dark " we are using a dark background
-set t_Co=16 " color numbers
+set t_Co=256 " color numbers
 set encoding=utf-8
 syntax on " syntax highlighting on
 
