@@ -21,9 +21,9 @@ Plugin 'SirVer/ultisnips'
 Plugin 'honza/vim-snippets'
 Plugin 'Raimondi/delimitMate'
 Plugin 'pangloss/vim-javascript'
-Plugin 'kchmck/vim-coffee-script'
 Plugin 'groenewege/vim-less'
 Plugin 'ap/vim-css-color'
+Plugin 'easymotion/vim-easymotion'
 Plugin 'matchit.zip'
 
 call vundle#end()
@@ -39,7 +39,7 @@ if has("gui_running")
     colorscheme solarized
     set guifont=Monaco:h14
 else
-    colorscheme default
+    colorscheme peachpuff
 endif
 " }
 
@@ -231,27 +231,10 @@ noremap <Leader>l :tabprev<CR>
 inoremap <Leader>l <ESC>tabprev<CR><Insert>
 " }
 
-" Automatically quit vim if NERDTree and tagbar are the last and only buffers
-function NoExcitingBuffersLeft()
-    " if NERDTree and tagbar both left
-    "if tabpagenr("$") == 1 && winnr("$") == 2 && exists("t:NERDTreeBufName")
-    if winnr("$") == 2 && exists("t:NERDTreeBufName")
-        let window1 = bufname(winbufnr(1))
-        let window2 = bufname(winbufnr(2))
-        if (window1 == t:NERDTreeBufName || window1 == "__Tagbar__") && (window2 == t:NERDTreeBufName || window2 == "__Tagbar__")
-            q
-        endif
-
-    endif
-    " if only NERDTree left
-    if winnr("$") == 1 && exists("b:NERDTreeType")
-        q
-    endif
-endfunction
-"
-autocmd bufenter * call NoExcitingBuffersLeft()
 autocmd VimEnter * NERDTree
 autocmd VimEnter * wincmd p
+" Automatically quit vim if NERDTree and tagbar are the last and only buffers
+autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
 
 " disable py_lint on every write
 ""let g:pymode_lint_write = 0
