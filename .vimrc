@@ -21,6 +21,7 @@ Plugin 'SirVer/ultisnips'
 Plugin 'honza/vim-snippets'
 Plugin 'Raimondi/delimitMate'
 Plugin 'pangloss/vim-javascript'
+Plugin 'mxw/vim-jsx'
 Plugin 'groenewege/vim-less'
 Plugin 'ap/vim-css-color'
 Plugin 'easymotion/vim-easymotion'
@@ -188,6 +189,9 @@ set foldmethod=indent   " Fold on the marker
 set foldlevel=1000 " Don't autofold anything (but I can still fold manually)
 """ }
 ""
+
+" vim-jsx to work for .js files
+let g:jsx_ext_required = 0
 
 " SuperTab
 let g:SuperTabDefaultCompletionType = "<C-x><C-o>"
