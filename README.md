@@ -1,6 +1,6 @@
 # 效果
 
-<img src="http://7xir1p.com1.z0.glb.clouddn.com/vim_screenshot.png">
+<img src="https://img.alicdn.com/tfs/TB10L9LuXzqK1RjSZFCXXbbxVXa-2558-1552.png">
 
 # 插件
 
