@@ -58,7 +58,7 @@ augroup resCur
 augroup END
 " END of restore cursor
 
-let NERDTreeIgnore=['\.pyc', '\~$', '\.git', '\.hg', '\.svn', '\.dsp', '\.opt', '\.plg', '\.pdf']
+let NERDTreeIgnore=['\.pyc', '\~$', '\.git', '\.hg', '\.svn', '\.dsp', '\.opt', '\.plg', '\.pdf', 'node_modules']
 let NERDTreeMouseMode=2 " Single click to activate directory
 
 " Mark trailing spaces
