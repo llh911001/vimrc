@@ -142,7 +142,7 @@ autocmd WinLeave * setlocal nocursorline
 highlight CursorLine ctermbg=black cterm=NONE
 highlight LineNr ctermbg=darkgrey ctermfg=grey " line number bg and fg schema
 "
-set list listchars=tab:\ \ ,trail:·,eol:¬ " mark trailing white space
+set list listchars=tab:\ \ ,trail:· " mark trailing white space
 " }
 
 " Visual Cues {
