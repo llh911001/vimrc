@@ -64,6 +64,11 @@ let NERDTreeMouseMode=2 " Single click to activate directory
 " Mark trailing spaces
 match ErrorMsg '\s\+$'
 
+" Cursor
+let &t_SI = "\<Esc>]50;CursorShape=1\x7"
+let &t_SR = "\<Esc>]50;CursorShape=2\x7"
+let &t_EI = "\<Esc>]50;CursorShape=0\x7"
+
 " Remove trailing spaces
 function! TrimTrailingSpaces()
     %s/\s\+$//e
