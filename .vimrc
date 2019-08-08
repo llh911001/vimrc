@@ -1,6 +1,5 @@
 " Basics {
-set nocompatible " get out of horrible vi-compatible mode *Vundle required*
-filetype off " *Vundle required*
+set nocompatible " get out of horrible vi-compatible mode *Vundle required* filetype off " *Vundle required*
 
 " Vundle
 set rtp+=~/.vim/bundle/Vundle.vim
@@ -73,11 +72,6 @@ let &t_EI = "\<Esc>]50;CursorShape=0\x7"
 function! TrimTrailingSpaces()
     %s/\s\+$//e
 endfunction
-
-"autocmd FileWritePre     * call TrimTrailingSpaces()
-"autocmd FileAppendPre    * call TrimTrailingSpaces()
-"autocmd FilterWritePre   * call TrimTrailingSpaces()
-"autocmd BufWritePre      * call TrimTrailingSpaces()
 
 " General {
 set history=1000 " How many lines of history to remember
@@ -214,7 +208,6 @@ noremap <Leader>r :NERDTreeFind<CR>
 
 inoremap ' ''<ESC>i
 inoremap " ""<ESC>i
-"inoremap { {}<ESC>i<CR><ESC>O
 
 noremap \ :Ag<Space>
 
@@ -229,9 +222,6 @@ noremap <F3> :NERDTreeToggle<CR>
 noremap <C-n> :NERDTreeToggle<CR>
 noremap <F4> :TagbarToggle<CR>
 
-" Indent
-""noremap <F8> gg=G
-""inoremap <F8> <ESC>mzgg=G`z<Insert>
 
 " Tab navigation
 noremap <Leader>h :tabn<CR>
@@ -245,75 +235,5 @@ autocmd VimEnter * wincmd p
 " Automatically quit vim if NERDTree and tagbar are the last and only buffers
 autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
 
-" disable py_lint on every write
-""let g:pymode_lint_write = 0
-
 " let tagbar to be compact
 let g:tagbar_compact = 1
-
-" Python customization {
-function LoadPythonGoodies()
-
-    if &ft=="python"||&ft=="html"||&ft=="xhtml"
-
-        " set python path to vim, and virtualenv settings
-        python << EOF
-import os, sys, vim
-
-for p in sys.path:
-    if os.path.isdir(p):
-        vim.command(r"set path+=%s" % (p.replace(" ", r"\ ")))
-
-vir_env = os.environ.get('VIRTUAL_ENV', '')
-if vir_env:
-    act_this = os.path.join(vir_env, 'bin/activate_this.py')
-    execfile(act_this, dict(__file__=act_this))
-EOF
-
-        " some nice adjustaments to show errors
-        syn match pythonError "^\s*def\s\+\w\+(.*)\s*$" display
-        syn match pythonError "^\s*class\s\+\w\+(.*)\s*$" display
-        syn match pythonError "^\s*for\s.*[^:]\s*$" display
-        syn match pythonError "^\s*except\s*$" display
-        syn match pythonError "^\s*finally\s*$" display
-        syn match pythonError "^\s*try\s*$" display
-        syn match pythonError "^\s*else\s*$" display
-        syn match pythonError "^\s*else\s*[^:].*" display
-        "syn match pythonError "^\s*if\s.*[^\:]$" display
-        syn match pythonError "^\s*except\s.*[^\:]$" display
-        syn match pythonError "[;]$" display
-        syn keyword pythonError         do
-
-        let python_highlight_builtins = 1
-        let python_highlight_exceptions = 1
-        let python_highlight_string_formatting = 1
-        let python_highlight_string_format = 1
-        let python_highlight_string_templates = 1
-        let python_highlight_indent_errors = 1
-        let python_highlight_space_errors = 1
-        let python_highlight_doctests = 1
-
-        set ai tw=0 ts=4 sts=4 sw=4 et
-
-    endif
-
-endfunction
-
-if !exists("myautocmds")
-    let g:myautocmds=1
-
-    "call LoadPythonGoodies()
-    "autocmd Filetype python,html,xhtml call LoadPythonGoodies()
-    au BufNewFile,BufRead *.py call LoadPythonGoodies()
-    au BufRead,BufNewFile *.md set filetype=markdown
-
-    " Omni completion
-    autocmd FileType python set omnifunc=pythoncomplete#Complete
-    autocmd FileType javascript set omnifunc=javascriptcomplete#CompleteJS
-    autocmd FileType html set omnifunc=htmlcomplete#CompleteTags
-    autocmd FileType css set omnifunc=csscomplete#CompleteCSS
-    " Dissmiss PyDoc preview
-    autocmd CursorMovedI * if pumvisible() == 0|pclose|endif
-    autocmd InsertLeave * if pumvisible() == 0|pclose|endif
-
-endif
