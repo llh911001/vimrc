@@ -22,3 +22,10 @@ cp .vimrc ~/
 ## 2. Install plugins
 
 Open an arbitrary file and the **plugins will be auto installed(depends on `curl`)**.
+
+
+# Inspirations and credits
+
+- [ctaylo21/jarvis](https://github.com/ctaylo21/jarvis/blob/master/config/nvim/init.vim)
+- [enigmatrix's vim setup](http://enigmatrix.me/blog/2019/06/12/my-vim-setup/)
+
