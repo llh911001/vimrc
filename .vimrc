@@ -1,46 +1,176 @@
-" Basics {
-set nocompatible " get out of horrible vi-compatible mode *Vundle required* filetype off " *Vundle required*
+" Use vim-plug
+if empty(glob('~/.vim/autoload/plug.vim'))
+  silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
+        \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+  autocmd VimEnter * PlugInstall
+endif
 
-" Vundle
-set rtp+=~/.vim/bundle/Vundle.vim
-call vundle#begin()
+call plug#begin('~/.vim/plugged')
 
-Plugin 'gmarik/Vundle.vim'
+Plug 'scrooloose/nerdtree'
+Plug 'neoclide/coc.nvim', {'do': { -> coc#util#install() }}
 
-Plugin 'scrooloose/nerdtree'
-Plugin 'scrooloose/syntastic'
-Plugin 'kien/ctrlp.vim'
-Plugin 'rking/ag.vim'
-Plugin 'majutsushi/tagbar'
-Plugin 'junegunn/vim-easy-align'
-Plugin 'mattn/emmet-vim'
-Plugin 'tpope/vim-surround'
-Plugin 'ervandew/supertab'
-Plugin 'SirVer/ultisnips'
-Plugin 'honza/vim-snippets'
-Plugin 'Raimondi/delimitMate'
-Plugin 'pangloss/vim-javascript'
-Plugin 'mxw/vim-jsx'
-Plugin 'groenewege/vim-less'
-Plugin 'ap/vim-css-color'
-Plugin 'easymotion/vim-easymotion'
-Plugin 'matchit.zip'
+Plug 'Shougo/denite.nvim'
+Plug 'roxma/nvim-yarp'
+Plug 'roxma/vim-hug-neovim-rpc'
 
-call vundle#end()
-filetype plugin indent on " load filetype plugins and indent settings; *Vundle required*
-" end Vundle
+Plug 'jiangmiao/auto-pairs'
+Plug 'tpope/vim-surround'
+Plug 'easymotion/vim-easymotion'
+
+Plug 'heavenshell/vim-jsdoc'
+
+Plug 'HerringtonDarkholme/yats.vim'
+Plug 'mxw/vim-jsx'
+Plug 'othree/yajs.vim'
+Plug 'ap/vim-css-color'
+
+" Initialize plugin system
+call plug#end()
 
 set background=dark " we are using a dark background
 set t_Co=256 " color numbers
 set encoding=utf-8
 syntax on " syntax highlighting on
+let mapleader=","
 
-if has("gui_running")
-    colorscheme solarized
-    set guifont=Monaco:h14
-else
-    colorscheme peachpuff
-endif
+colorscheme peachpuff
+
+" NERDTree {
+noremap <C-n> :NERDTreeToggle<CR>
+let NERDTreeIgnore=['\.DS_Store', '\~$', '\.git', 'node_modules']
+" }
+
+" coc.nvim {
+let g:coc_global_extensions = ['coc-tsserver', 'coc-json', 'coc-css']
+
+" use <tab> for trigger completion and navigate to next complete item
+inoremap <silent><expr> <TAB>
+      \ pumvisible() ? "\<C-n>" :
+      \ <SID>check_back_space() ? "\<TAB>" :
+      \ coc#refresh()
+inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
+
+" Close preview window when completion is done.
+autocmd! CompleteDone * if pumvisible() == 0 | pclose | endif
+
+function! s:check_back_space() abort
+  let col = col('.') - 1
+  return !col || getline('.')[col - 1]  =~ '\s'
+endfunction
+
+" Use K to show documentation in preview window
+nnoremap <silent> K :call <SID>show_documentation()<CR>
+
+function! s:show_documentation()
+  if (index(['vim','help'], &filetype) >= 0)
+    execute 'h '.expand('<cword>')
+  else
+    call CocAction('doHover')
+  endif
+endfunction
+
+" GoTo code navigation.
+nmap <silent> gd <Plug>(coc-definition)
+nmap <silent> gt <Plug>(coc-type-definition)
+nmap <silent> gi <Plug>(coc-implementation)
+nmap <silent> gr <Plug>(coc-references)
+
+" Use `kp` and `kn` for navigate diagnostics
+nmap <silent> <Leader>kp <Plug>(coc-diagnostic-prev)
+nmap <silent> <Leader>kn <Plug>(coc-diagnostic-next)
+" Remap for rename current word
+nmap <Leader>kr <Plug>(coc-rename)
+" }
+"
+" denite.vim {
+call denite#custom#var('file/rec', 'command', ['ag', '--follow', '--nocolor', '--nogroup', '-g', ''])
+call denite#custom#var('grep', 'command', ['ag'])
+call denite#custom#var('grep', 'default_opts', ['-i', '--vimgrep'])
+call denite#custom#var('grep', 'recursive_opts', [])
+call denite#custom#var('grep', 'pattern_opt', [])
+call denite#custom#var('grep', 'separator', ['--'])
+call denite#custom#var('grep', 'final_opts', [])
+call denite#custom#var('buffer', 'date_format', '')
+call denite#custom#source('file_rec', 'sorters', ['sorter_sublime'])
+call denite#custom#filter('matcher_ignore_globs', 'ignore_globs',
+      \ [ '.git/', 'node_modules/', 'images/', '*.min.*', 'img/', 'fonts/', '*.png'])
+
+let s:denite_options = {'default' : {
+\ 'start_filter': 1,
+\ 'auto_resize': 1,
+\ 'source_names': 'short',
+\ 'prompt': 'λ ',
+\ 'highlight_matched_char': 'QuickFixLine',
+\ 'highlight_matched_range': 'Visual',
+\ 'highlight_window_background': 'Visual',
+\ 'highlight_filter_background': 'DiffAdd',
+\ 'winrow': 1,
+\ 'vertical_preview': 1
+\ }}
+
+function! s:profile(opts) abort
+  for l:fname in keys(a:opts)
+    for l:dopt in keys(a:opts[l:fname])
+      call denite#custom#option(l:fname, l:dopt, a:opts[l:fname][l:dopt])
+    endfor
+  endfor
+endfunction
+
+call s:profile(s:denite_options)
+
+nmap <C-p> :Denite -start-filter file/rec<CR>
+nmap <Leader>b :Denite buffer<CR>
+nnoremap \ :Denite grep<CR>
+
+autocmd FileType denite-filter call s:denite_filter_my_settings()
+function! s:denite_filter_my_settings() abort
+  imap <silent><buffer> <Esc>
+  \ <Plug>(denite_filter_quit)
+  nnoremap <silent><buffer><expr> <Esc>
+  \ denite#do_map('quit')
+  inoremap <silent><buffer><expr> <CR>
+  \ denite#do_map('do_action')
+  inoremap <silent><buffer><expr> <C-t>
+  \ denite#do_map('do_action', 'tabopen')
+  inoremap <silent><buffer><expr> <C-v>
+  \ denite#do_map('do_action', 'vsplit')
+  inoremap <silent><buffer><expr> <C-h>
+  \ denite#do_map('do_action', 'split')
+endfunction
+
+autocmd FileType denite call s:denite_my_settings()
+function! s:denite_my_settings() abort
+  nnoremap <silent><buffer><expr> <CR>
+  \ denite#do_map('do_action')
+  nnoremap <silent><buffer><expr> q
+  \ denite#do_map('quit')
+  nnoremap <silent><buffer><expr> <Esc>
+  \ denite#do_map('quit')
+  nnoremap <silent><buffer><expr> d
+  \ denite#do_map('do_action', 'delete')
+  nnoremap <silent><buffer><expr> p
+  \ denite#do_map('do_action', 'preview')
+  nnoremap <silent><buffer><expr> i
+  \ denite#do_map('open_filter_buffer')
+  nnoremap <silent><buffer><expr> <C-o>
+  \ denite#do_map('open_filter_buffer')
+  nnoremap <silent><buffer><expr> <C-t>
+  \ denite#do_map('do_action', 'tabopen')
+  nnoremap <silent><buffer><expr> <C-v>
+  \ denite#do_map('do_action', 'vsplit')
+  nnoremap <silent><buffer><expr> <C-h>
+  \ denite#do_map('do_action', 'split')
+endfunction
+" }
+
+" vim-jsx {
+let g:jsx_ext_required = 0
+" }
+
+" vim-jsdoc {
+" Generate jsdoc for function under cursor
+nmap <Leader>j :JsDoc<CR>
 " }
 
 " When editing a file, always jump to the last cursor position
@@ -57,9 +187,6 @@ augroup resCur
 augroup END
 " END of restore cursor
 
-let NERDTreeIgnore=['\.pyc', '\~$', '\.git', '\.hg', '\.svn', '\.dsp', '\.opt', '\.plg', '\.pdf', 'node_modules']
-let NERDTreeMouseMode=2 " Single click to activate directory
-
 " Mark trailing spaces
 match ErrorMsg '\s\+$'
 
@@ -74,13 +201,13 @@ function! TrimTrailingSpaces()
 endfunction
 
 " General {
+set updatetime=300
 set history=1000 " How many lines of history to remember
 set clipboard+=unnamed " turns out I do like is sharing windows clipboard
 set fileformats=unix,dos,mac " support all three, in this order
 set viminfo+=! " make sure it can save viminfo
 set iskeyword+=_,$,@,%,# " none of these should be word dividers, so make them not be
 set nostartofline " leave my cursor where it was
-let mapleader=","
 " }
 
 " Files/Backups {
@@ -89,27 +216,9 @@ set sessionoptions+=localoptions " What should be saved during sessions being sa
 set sessionoptions+=resize " What should be saved during sessions being saved
 set sessionoptions+=winpos " What should be saved during sessions being saved
 " }
-"
-" The Silver Searcher
-if executable('ag')
-  " Use ag over grep
-  set grepprg=ag\ --nogroup\ --nocolor
-
-  " Use ag in CtrlP for listing files. Lightning fast and respects .gitignore
-  let g:ctrlp_user_command = 'ag %s -l --nocolor -g ""'
-
-  " ag is fast enough that CtrlP doesn't need to cache
-  let g:ctrlp_use_caching = 0
-endif
-
-let g:syntastic_mode_map = {'mode': 'passive'}
-let g:syntastic_javascript_checkers = ['standard']
-let g:syntastic_html_checkers=['']
-let g:syntastic_check_on_open = 0
-let g:syntastic_check_on_wq = 0
-noremap <C-c> :SyntasticCheck<CR>
 
 " Vim UI {
+set cmdheight=2
 set popt+=syntax:y " Syntax when printing
 set showcmd " show the command being typed
 set linespace=0 " space it out a little more (easier to read)
@@ -117,7 +226,6 @@ set wildmenu " turn on wild menu
 set wildmode=list:longest " turn on wild menu in special format (long format)
 set wildignore=*.pyc,*.pyo,*.dll,*.o,*.obj,*.exe,*.swo,*.swp,*.jpg,*.gif,*.png " ignore some formats,*.bak,
 set ruler " Always show current positions along the bottom
-set cmdheight=1 " the command bar is 1 high
 set number " turn on line numbers
 set numberwidth=4 " If we have over 9999 lines, ohh, boo-hoo
 set lazyredraw " do not redraw while running macros (much faster) (LazyRedraw)
@@ -163,11 +271,9 @@ set tabstop=2 " real tabs should be 4, but they will show with set list on
 set expandtab " use spaces instead of tab
 set smarttab " be smart when using tabs
 set copyindent " but above all -- follow the conventions laid before us
-
 " }
 
 " Text Formatting/Layout {
-"set formatoptions=tcrq " See Help (complex)
 set shiftround " when at 3 spaces, and I hit > ... go to 4, not 5
 set nowrap " do not wrap line
 set preserveindent " but above all -- follow the conventions laid before us
@@ -179,26 +285,13 @@ set nocursorcolumn " don't show the current column
 
 " Folding {
 set foldenable        " Turn on folding
-"set foldmarker={,}        " Fold C style code (only use this as default if you use a high foldlevel)
-"set foldcolumn=4        " Give 1 column for fold markers
-""set foldopen-=search    " don't open folds when you search into them
-""set foldopen-=undo        " don't open folds when you undo stuff
 set foldmethod=indent   " Fold on the marker
 "set foldnestmax=2
 set foldlevel=1000 " Don't autofold anything (but I can still fold manually)
-""" }
-""
-
-" vim-jsx to work for .js files
-let g:jsx_ext_required = 0
-
-" SuperTab
-let g:SuperTabDefaultCompletionType = "<C-x><C-o>"
-let g:SuperTabDefaultCompletionType = "context"
+" }
 
 " Mappings {
 noremap <Leader>t :call TrimTrailingSpaces()<CR>
-" Count number of matches
 noremap <Leader>c :%s///gn<CR>
 noremap <Leader>a ^
 noremap <Leader>e $
@@ -206,10 +299,9 @@ noremap <Leader>s :w<CR>
 noremap <Leader>z :q<CR>
 noremap <Leader>r :NERDTreeFind<CR>
 
-inoremap ' ''<ESC>i
-inoremap " ""<ESC>i
-
-noremap \ :Ag<Space>
+noremap <Leader>/ :nohlsearch<CR>
+" Delete current visual selection and dump in black hole buffer before pasting
+vnoremap <Leader>p "_dP
 
 " Switch window
 noremap <silent> <C-k> <C-W>k
@@ -217,23 +309,17 @@ noremap <silent> <C-j> <C-W>j
 noremap <silent> <C-h> <C-W>h
 noremap <silent> <C-l> <C-W>l
 
-" NERDTree and Tagbar
-noremap <F3> :NERDTreeToggle<CR>
-noremap <C-n> :NERDTreeToggle<CR>
-noremap <F4> :TagbarToggle<CR>
-
-
 " Tab navigation
 noremap <Leader>h :tabn<CR>
 inoremap <Leader>h <esc>:tabn<CR><Insert>
 noremap <Leader>l :tabprev<CR>
 inoremap <Leader>l <ESC>tabprev<CR><Insert>
+
+" Allows you to save files you opened without write permissions via sudo
+cmap w!! w !sudo tee %
 " }
 
 autocmd VimEnter * NERDTree
 autocmd VimEnter * wincmd p
 " Automatically quit vim if NERDTree and tagbar are the last and only buffers
 autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
-
-" let tagbar to be compact
-let g:tagbar_compact = 1

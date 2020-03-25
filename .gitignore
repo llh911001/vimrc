@@ -1,2 +1,11 @@
-bundle/*
-!bundle/Vundle.vim
+.DS_Store
+
+*.tmp
+*.swo
+*.swp
+*.diff
+*.log
+*.patch
+
+autoload
+plugged
