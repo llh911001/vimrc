@@ -25,6 +25,8 @@ Plug 'mxw/vim-jsx'
 Plug 'othree/yajs.vim'
 Plug 'ap/vim-css-color'
 
+Plug 'mhartington/oceanic-next'
+
 " Initialize plugin system
 call plug#end()
 
@@ -34,7 +36,7 @@ set encoding=utf-8
 syntax on " syntax highlighting on
 let mapleader=","
 
-colorscheme peachpuff
+colorscheme OceanicNext
 
 " NERDTree {
 noremap <C-n> :NERDTreeToggle<CR>
