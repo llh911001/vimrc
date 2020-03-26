@@ -21,7 +21,7 @@ Plug 'easymotion/vim-easymotion'
 Plug 'heavenshell/vim-jsdoc'
 
 Plug 'HerringtonDarkholme/yats.vim'
-Plug 'mxw/vim-jsx'
+Plug 'maxmellon/vim-jsx-pretty'
 Plug 'othree/yajs.vim'
 Plug 'ap/vim-css-color'
 
@@ -84,7 +84,7 @@ nmap <silent> <Leader>kn <Plug>(coc-diagnostic-next)
 " Remap for rename current word
 nmap <Leader>kr <Plug>(coc-rename)
 " }
-"
+
 " denite.vim {
 call denite#custom#var('file/rec', 'command', ['ag', '--follow', '--nocolor', '--nogroup', '-g', ''])
 call denite#custom#var('grep', 'command', ['ag'])
@@ -164,10 +164,6 @@ function! s:denite_my_settings() abort
   nnoremap <silent><buffer><expr> <C-h>
   \ denite#do_map('do_action', 'split')
 endfunction
-" }
-
-" vim-jsx {
-let g:jsx_ext_required = 0
 " }
 
 " vim-jsdoc {
