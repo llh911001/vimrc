@@ -5,7 +5,7 @@ Web development, especially JavaScript/TypeScript + React.
 # Requirements
 
 - `curl`
-- NodeJS `>= 8.0`
+- NodeJS `>= 8.10.0`
 - Vim `>= 8.2`
 - pynvim(`pip3 install --user pynvim`)
 
