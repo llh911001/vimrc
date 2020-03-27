@@ -239,8 +239,9 @@ set relativenumber
 " highlight the cursor current line in current window
 autocmd VimEnter,WinEnter,BufWinEnter * setlocal cursorline
 autocmd WinLeave * setlocal nocursorline
-highlight CursorLine ctermbg=black cterm=NONE
+highlight CursorLine ctermbg=NONE cterm=NONE
 highlight LineNr ctermbg=darkgrey ctermfg=grey " line number bg and fg schema
+highlight CursorLineNr ctermbg=black cterm=NONE " cursor line number bg
 "
 set list listchars=tab:\ \ ,trail:· " mark trailing white space
 " }
