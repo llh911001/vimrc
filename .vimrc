@@ -20,23 +20,28 @@ Plug 'easymotion/vim-easymotion'
 
 Plug 'heavenshell/vim-jsdoc'
 
+Plug 'pangloss/vim-javascript'
+
 Plug 'HerringtonDarkholme/yats.vim'
 Plug 'maxmellon/vim-jsx-pretty'
-Plug 'othree/yajs.vim'
 Plug 'ap/vim-css-color'
 
-Plug 'mhartington/oceanic-next'
+" Themes
+Plug 'joshdick/onedark.vim'
+"Plug 'chriskempson/base16-vim'
 
 " Initialize plugin system
 call plug#end()
 
-set background=dark " we are using a dark background
-set t_Co=256 " color numbers
-set encoding=utf-8
-syntax on " syntax highlighting on
-let mapleader=","
+set background=dark
+set termguicolors
 
-colorscheme OceanicNext
+colorscheme onedark
+"colorscheme base16-oceanicnext
+
+syntax enable
+set encoding=utf-8
+let mapleader=","
 
 " NERDTree {
 noremap <C-n> :NERDTreeToggle<CR>
@@ -239,9 +244,8 @@ set relativenumber
 " highlight the cursor current line in current window
 autocmd VimEnter,WinEnter,BufWinEnter * setlocal cursorline
 autocmd WinLeave * setlocal nocursorline
-highlight CursorLine ctermbg=NONE cterm=NONE
-highlight LineNr ctermbg=darkgrey ctermfg=grey " line number bg and fg schema
-highlight CursorLineNr ctermbg=black cterm=NONE " cursor line number bg
+highlight CursorLine ctermbg=NONE cterm=NONE guibg=NONE
+highlight CursorLineNr term=bold cterm=bold gui=bold
 "
 set list listchars=tab:\ \ ,trail:· " mark trailing white space
 " }
