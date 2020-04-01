@@ -7,7 +7,8 @@ endif
 
 call plug#begin('~/.vim/plugged')
 
-Plug 'scrooloose/nerdtree'
+Plug 'preservim/nerdtree'
+
 Plug 'neoclide/coc.nvim', {'do': { -> coc#util#install() }}
 
 Plug 'Shougo/denite.nvim'
@@ -18,10 +19,8 @@ Plug 'jiangmiao/auto-pairs'
 Plug 'tpope/vim-surround'
 Plug 'easymotion/vim-easymotion'
 
-Plug 'heavenshell/vim-jsdoc'
-
 Plug 'pangloss/vim-javascript'
-
+Plug 'heavenshell/vim-jsdoc'
 Plug 'HerringtonDarkholme/yats.vim'
 Plug 'maxmellon/vim-jsx-pretty'
 Plug 'ap/vim-css-color'
@@ -29,23 +28,31 @@ Plug 'ap/vim-css-color'
 " Themes
 Plug 'joshdick/onedark.vim'
 "Plug 'chriskempson/base16-vim'
+"Plug 'kaicataldo/material.vim'
 
 " Initialize plugin system
 call plug#end()
 
+syntax enable
 set background=dark
 set termguicolors
 
 colorscheme onedark
 "colorscheme base16-oceanicnext
+"colorscheme material
+"let g:material_theme_style='darker'
 
-syntax enable
 set encoding=utf-8
 let mapleader=","
 
 " NERDTree {
 noremap <C-n> :NERDTreeToggle<CR>
 let NERDTreeIgnore=['\.DS_Store', '\~$', '\.git', 'node_modules']
+
+autocmd VimEnter * NERDTree
+autocmd VimEnter * wincmd p
+" Automatically quit vim if NERDTree and tagbar are the last and only buffers
+autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
 " }
 
 " coc.nvim {
@@ -86,8 +93,7 @@ nmap <silent> gr <Plug>(coc-references)
 " Use `kp` and `kn` for navigate diagnostics
 nmap <silent> <Leader>kp <Plug>(coc-diagnostic-prev)
 nmap <silent> <Leader>kn <Plug>(coc-diagnostic-next)
-" Remap for rename current word
-nmap <Leader>kr <Plug>(coc-rename)
+nmap <silent> <Leader>kr <Plug>(coc-rename)
 " }
 
 " denite.vim {
@@ -172,125 +178,100 @@ endfunction
 " }
 
 " vim-jsdoc {
-" Generate jsdoc for function under cursor
+" generate jsdoc for function under cursor
 nmap <Leader>j :JsDoc<CR>
 " }
 
 " When editing a file, always jump to the last cursor position
 function! ResCur()
-    if line("'\"") > 0 && line("'\"") <= line("$")
-        normal! g`"
-        return 1
-    endif
+  if line("'\"") > 0 && line("'\"") <= line("$")
+    normal! g`"
+    return 1
+  endif
 endfunction
 
 augroup resCur
-    autocmd!
-    autocmd BufWinEnter * call ResCur()
+  autocmd!
+  autocmd BufWinEnter * call ResCur()
 augroup END
 " END of restore cursor
 
-" Mark trailing spaces
-match ErrorMsg '\s\+$'
-
 " Cursor
-let &t_SI = "\<Esc>]50;CursorShape=1\x7"
-let &t_SR = "\<Esc>]50;CursorShape=2\x7"
-let &t_EI = "\<Esc>]50;CursorShape=0\x7"
+let &t_SI="\<Esc>]50;CursorShape=1\x7"
+let &t_SR="\<Esc>]50;CursorShape=2\x7"
+let &t_EI="\<Esc>]50;CursorShape=0\x7"
 
 " Remove trailing spaces
 function! TrimTrailingSpaces()
     %s/\s\+$//e
 endfunction
 
-" General {
+" General settings {
 set updatetime=300
-set history=1000 " How many lines of history to remember
-set clipboard+=unnamed " turns out I do like is sharing windows clipboard
-set fileformats=unix,dos,mac " support all three, in this order
+set history=1000 " lines of history to remember
+set clipboard+=unnamed " share with system clipboard
 set viminfo+=! " make sure it can save viminfo
-set iskeyword+=_,$,@,%,# " none of these should be word dividers, so make them not be
-set nostartofline " leave my cursor where it was
+set report=0 " report when anything changed via :...
+set noerrorbells " don't make noise
 " }
 
-" Files/Backups {
-set sessionoptions+=globals " What should be saved during sessions being saved
-set sessionoptions+=localoptions " What should be saved during sessions being saved
-set sessionoptions+=resize " What should be saved during sessions being saved
-set sessionoptions+=winpos " What should be saved during sessions being saved
-" }
-
-" Vim UI {
-set cmdheight=2
-set popt+=syntax:y " Syntax when printing
-set showcmd " show the command being typed
+" UI {
+set printoptions+=syntax:y " syntax when printing
 set linespace=0 " space it out a little more (easier to read)
 set wildmenu " turn on wild menu
 set wildmode=list:longest " turn on wild menu in special format (long format)
 set wildignore=*.pyc,*.pyo,*.dll,*.o,*.obj,*.exe,*.swo,*.swp,*.jpg,*.gif,*.png " ignore some formats,*.bak,
-set ruler " Always show current positions along the bottom
 set number " turn on line numbers
-set numberwidth=4 " If we have over 9999 lines, ohh, boo-hoo
-set lazyredraw " do not redraw while running macros (much faster) (LazyRedraw)
-set hidden " you can change buffer without saving
-set backspace=2 " make backspace work normal
-set whichwrap+=<,>,[,],h,l  " backspace and cursor keys wrap to
-"set mouse=a " use mouse everywhere
-"set shortmess=atI " shortens messages to avoid 'press a key' prompt
-set report=0 " tell us when anything is changed via :...
-set noerrorbells " don't make noise
 set relativenumber
+set numberwidth=4
+set lazyredraw " do not redraw while running macros (much faster) (LazyRedraw)
+set hidden " change buffer without saving
+set backspace=indent,eol,start " make backspace work normal
+set whichwrap+=<,>,[,],b,s  " backspace and cursor keys wrap to
+"set mouse=a " use mouse everywhere
+
+set showmatch " show matching brackets
+set hlsearch
+set incsearch " highlight as type
+set scrolloff=5 " keep 5 lines (top/bottom) for scope
+set sidescrolloff=5 " keep 5 lines at the side
+set visualbell " blink instead beep
+set statusline=%f%m%r%h%w\ [POS=%04l,%04v][%p%%]\ [LEN=%L]
+"set statusline=%F%m%r%h%w\ [FORMAT=%{&ff}]\ [TYPE=%Y]\ [ENCODE=%{&fenc}]\ [POS=%04l,%04v][%p%%]\ [LEN=%L]
+set laststatus=2 " always show the status line
 
 " highlight the cursor current line in current window
 autocmd VimEnter,WinEnter,BufWinEnter * setlocal cursorline
 autocmd WinLeave * setlocal nocursorline
 highlight CursorLine ctermbg=NONE cterm=NONE guibg=NONE
 highlight CursorLineNr term=bold cterm=bold gui=bold
-"
-set list listchars=tab:\ \ ,trail:· " mark trailing white space
-" }
 
-" Visual Cues {
-set showmatch " show matching brackets
-set matchtime=5 " how many tenths of a second to blink matching brackets for
-set hlsearch
-set incsearch " BUT do highlight as you type you search phrase
-set scrolloff=5 " Keep 5 lines (top/bottom) for scope
-set sidescrolloff=5 " Keep 5 lines at the size
-"set novisualbell " don't blink
-set vb " blink instead beep
-set statusline=%f%m%r%h%w\ [POS=%04l,%04v][%p%%]\ [LEN=%L]
-"set statusline=%F%m%r%h%w\ [FORMAT=%{&ff}]\ [TYPE=%Y]\ [ENCODE=%{&fenc}]\ [POS=%04l,%04v][%p%%]\ [LEN=%L]
-set laststatus=2 " always show the status line
+set list listchars=tab:→\ ,trail:· " mark tab and trailing white space
+match ErrorMsg '\s\+$' " mark trailing spaces as error
 " }
 
 " Indent Related {
 set nosmartindent " smartindent (filetype indenting instead)
-set autoindent " autoindent (should be overwrote by cindent or filetype indent)
-set cindent " do c-style indenting
 set softtabstop=2 " unify
 set shiftwidth=2 " unify
-set tabstop=2 " real tabs should be 4, but they will show with set list on
+set tabstop=2 " unify
 set expandtab " use spaces instead of tab
 set smarttab " be smart when using tabs
-set copyindent " but above all -- follow the conventions laid before us
+set copyindent " follow existing lines indent
 " }
 
 " Text Formatting/Layout {
-set shiftround " when at 3 spaces, and I hit > ... go to 4, not 5
-set nowrap " do not wrap line
-set preserveindent " but above all -- follow the conventions laid before us
+set shiftround " when at 3 spaces, and hit > ... go to 4, not 5
+"set nowrap " do not wrap line
+set preserveindent " follow existing lines
 set ignorecase " case insensitive by default
 set smartcase " if there are caps, go case-sensitive
 set completeopt=menu,longest,preview " improve the way autocomplete works
-set nocursorcolumn " don't show the current column
 " }
 
 " Folding {
-set foldenable        " Turn on folding
-set foldmethod=indent   " Fold on the marker
-"set foldnestmax=2
-set foldlevel=1000 " Don't autofold anything (but I can still fold manually)
+set foldmethod=indent   " fold on the marker
+set foldlevel=1000 " don't autofold anything
 " }
 
 " Mappings {
@@ -321,8 +302,3 @@ inoremap <Leader>l <ESC>tabprev<CR><Insert>
 " Allows you to save files you opened without write permissions via sudo
 cmap w!! w !sudo tee %
 " }
-
-autocmd VimEnter * NERDTree
-autocmd VimEnter * wincmd p
-" Automatically quit vim if NERDTree and tagbar are the last and only buffers
-autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif

@@ -5,7 +5,7 @@ Web development, especially JavaScript/TypeScript + React.
 # Requirements
 
 - `curl`
-- NodeJS `>= 8.10.0`
+- Node.js `>= 8.10.0`
 - Vim `>= 8.2`
 - pynvim(`pip3 install --user pynvim`)
 
@@ -22,7 +22,6 @@ cp .vimrc ~/
 ## 2. Install plugins
 
 Open an arbitrary file and the **plugins will be auto installed(depends on `curl`)**.
-
 
 # Inspirations and credits
 
