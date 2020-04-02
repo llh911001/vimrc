@@ -1,7 +1,7 @@
 " Use vim-plug
 if empty(glob('~/.vim/autoload/plug.vim'))
   silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
-        \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+    \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
   autocmd VimEnter * PlugInstall
 endif
 
@@ -20,13 +20,15 @@ Plug 'tpope/vim-surround'
 Plug 'easymotion/vim-easymotion'
 
 Plug 'pangloss/vim-javascript'
-Plug 'heavenshell/vim-jsdoc'
+Plug 'kkoomen/vim-doge'
 Plug 'HerringtonDarkholme/yats.vim'
 Plug 'maxmellon/vim-jsx-pretty'
-Plug 'ap/vim-css-color'
 
 " Themes
 Plug 'joshdick/onedark.vim'
+"Plug 'kristijanhusak/vim-hybrid-material'
+"Plug 'srcery-colors/srcery-vim'
+"Plug 'sainnhe/edge'
 "Plug 'chriskempson/base16-vim'
 "Plug 'kaicataldo/material.vim'
 
@@ -34,13 +36,17 @@ Plug 'joshdick/onedark.vim'
 call plug#end()
 
 syntax enable
-set background=dark
 set termguicolors
+set background=dark
 
 colorscheme onedark
+"colorscheme hybrid_reverse
+"colorscheme srcery
+"colorscheme edge
 "colorscheme base16-oceanicnext
-"colorscheme material
+"let g:material_terminal_italics=1
 "let g:material_theme_style='darker'
+"colorscheme material
 
 set encoding=utf-8
 let mapleader=","
@@ -60,9 +66,9 @@ let g:coc_global_extensions = ['coc-tsserver', 'coc-json', 'coc-css']
 
 " use <tab> for trigger completion and navigate to next complete item
 inoremap <silent><expr> <TAB>
-      \ pumvisible() ? "\<C-n>" :
-      \ <SID>check_back_space() ? "\<TAB>" :
-      \ coc#refresh()
+\ pumvisible() ? "\<C-n>" :
+\ <SID>check_back_space() ? "\<TAB>" :
+\ coc#refresh()
 inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
 
 " Close preview window when completion is done.
@@ -177,9 +183,9 @@ function! s:denite_my_settings() abort
 endfunction
 " }
 
-" vim-jsdoc {
+" vim-doge {
 " generate jsdoc for function under cursor
-nmap <Leader>j :JsDoc<CR>
+let g:doge_mapping='<Leader>d'
 " }
 
 " When editing a file, always jump to the last cursor position
@@ -236,8 +242,7 @@ set incsearch " highlight as type
 set scrolloff=5 " keep 5 lines (top/bottom) for scope
 set sidescrolloff=5 " keep 5 lines at the side
 set visualbell " blink instead beep
-set statusline=%f%m%r%h%w\ [POS=%04l,%04v][%p%%]\ [LEN=%L]
-"set statusline=%F%m%r%h%w\ [FORMAT=%{&ff}]\ [TYPE=%Y]\ [ENCODE=%{&fenc}]\ [POS=%04l,%04v][%p%%]\ [LEN=%L]
+set statusline=\ %f%m%r%h%w\ \|\ Col\:\ %02v\,\ Ln\:\ %02l/%L\ (%p%%)%=%{&ft}\ \|\ %{&ff}\ \|\ %{&fenc}\ 
 set laststatus=2 " always show the status line
 
 " highlight the cursor current line in current window
