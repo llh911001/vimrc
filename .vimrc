@@ -242,7 +242,13 @@ set incsearch " highlight as type
 set scrolloff=5 " keep 5 lines (top/bottom) for scope
 set sidescrolloff=5 " keep 5 lines at the side
 set visualbell " blink instead beep
-set statusline=\ %f%m%r%h%w\ \|\ Col\:\ %02v\,\ Ln\:\ %02l/%L\ (%p%%)%=%{&ft}\ \|\ %{&ff}\ \|\ %{&fenc}\ 
+
+function! StLine()
+  let line_lead_zero = strlen(line('$'))
+  return ' %f%m%r%h%w | %02v:%0' . line_lead_zero . 'l/%L (%p%%)%=%{&ft} | %{&ff} | %{&fenc} '
+endfunction
+
+set statusline=%!StLine()
 set laststatus=2 " always show the status line
 
 " highlight the cursor current line in current window
