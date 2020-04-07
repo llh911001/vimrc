@@ -19,8 +19,8 @@ Plug 'jiangmiao/auto-pairs'
 Plug 'tpope/vim-surround'
 Plug 'easymotion/vim-easymotion'
 
-Plug 'pangloss/vim-javascript'
 Plug 'kkoomen/vim-doge'
+Plug 'pangloss/vim-javascript'
 Plug 'HerringtonDarkholme/yats.vim'
 Plug 'maxmellon/vim-jsx-pretty'
 
@@ -242,13 +242,8 @@ set incsearch " highlight as type
 set scrolloff=5 " keep 5 lines (top/bottom) for scope
 set sidescrolloff=5 " keep 5 lines at the side
 set visualbell " blink instead beep
-
-function! StLine()
-  let line_lead_zero = strlen(line('$'))
-  return ' %f%m%r%h%w | %02v:%0' . line_lead_zero . 'l/%L (%p%%)%=%{&ft} | %{&ff} | %{&fenc} '
-endfunction
-
-set statusline=%!StLine()
+"set statusline=\ %f%m%r%h%w\ \|\ %2p%%\ %4v:%-4l/%4L%=%{coc#status()}\ 
+set statusline=\ %f%m%r%h%w\ \|\ %p%%\ %v:%l/%L%=%{&ft}\ \|\ %{coc#status()}\ 
 set laststatus=2 " always show the status line
 
 " highlight the cursor current line in current window
