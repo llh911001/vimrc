@@ -19,6 +19,7 @@ Plug 'jiangmiao/auto-pairs'
 Plug 'tpope/vim-surround'
 Plug 'easymotion/vim-easymotion'
 
+Plug 'tpope/vim-fugitive'
 Plug 'kkoomen/vim-doge'
 Plug 'pangloss/vim-javascript'
 Plug 'HerringtonDarkholme/yats.vim'
@@ -29,7 +30,6 @@ Plug 'joshdick/onedark.vim'
 "Plug 'kristijanhusak/vim-hybrid-material'
 "Plug 'srcery-colors/srcery-vim'
 "Plug 'sainnhe/edge'
-"Plug 'chriskempson/base16-vim'
 "Plug 'kaicataldo/material.vim'
 
 " Initialize plugin system
@@ -43,7 +43,6 @@ colorscheme onedark
 "colorscheme hybrid_reverse
 "colorscheme srcery
 "colorscheme edge
-"colorscheme base16-oceanicnext
 "let g:material_terminal_italics=1
 "let g:material_theme_style='darker'
 "colorscheme material
@@ -221,41 +220,6 @@ set report=0 " report when anything changed via :...
 set noerrorbells " don't make noise
 " }
 
-" UI {
-set printoptions+=syntax:y " syntax when printing
-set linespace=0 " space it out a little more (easier to read)
-set wildmenu " turn on wild menu
-set wildmode=list:longest " turn on wild menu in special format (long format)
-set wildignore=*.pyc,*.pyo,*.dll,*.o,*.obj,*.exe,*.swo,*.swp,*.jpg,*.gif,*.png " ignore some formats,*.bak,
-set number " turn on line numbers
-set relativenumber
-set numberwidth=4
-set lazyredraw " do not redraw while running macros (much faster) (LazyRedraw)
-set hidden " change buffer without saving
-set backspace=indent,eol,start " make backspace work normal
-set whichwrap+=<,>,[,],b,s  " backspace and cursor keys wrap to
-"set mouse=a " use mouse everywhere
-
-set showmatch " show matching brackets
-set hlsearch
-set incsearch " highlight as type
-set scrolloff=5 " keep 5 lines (top/bottom) for scope
-set sidescrolloff=5 " keep 5 lines at the side
-set visualbell " blink instead beep
-"set statusline=\ %f%m%r%h%w\ \|\ %2p%%\ %4v:%-4l/%4L%=%{coc#status()}\ 
-set statusline=\ %f%m%r%h%w\ \|\ %p%%\ %v:%l/%L%=%{&ft}\ \|\ %{coc#status()}\ 
-set laststatus=2 " always show the status line
-
-" highlight the cursor current line in current window
-autocmd VimEnter,WinEnter,BufWinEnter * setlocal cursorline
-autocmd WinLeave * setlocal nocursorline
-highlight CursorLine ctermbg=NONE cterm=NONE guibg=NONE
-highlight CursorLineNr term=bold cterm=bold gui=bold
-
-set list listchars=tab:→\ ,trail:· " mark tab and trailing white space
-match ErrorMsg '\s\+$' " mark trailing spaces as error
-" }
-
 " Indent Related {
 set nosmartindent " smartindent (filetype indenting instead)
 set softtabstop=2 " unify
@@ -278,6 +242,46 @@ set completeopt=menu,longest,preview " improve the way autocomplete works
 " Folding {
 set foldmethod=indent   " fold on the marker
 set foldlevel=1000 " don't autofold anything
+" }
+
+" UI {
+set linespace=0 " space it out a little more (easier to read)
+set wildmenu " turn on wild menu
+set wildmode=list:longest " turn on wild menu in special format (long format)
+set wildignore=*.pyc,*.pyo,*.dll,*.o,*.obj,*.exe,*.swo,*.swp,*.jpg,*.gif,*.png " ignore some formats,*.bak,
+set number " turn on line numbers
+set relativenumber
+set numberwidth=4
+set lazyredraw " do not redraw while running macros (much faster) (LazyRedraw)
+set hidden " change buffer without saving
+set backspace=indent,eol,start " make backspace work normal
+set whichwrap+=<,>,[,],b,s  " backspace and cursor keys wrap to
+set printoptions+=syntax:y " syntax when printing
+"set mouse=a " use mouse everywhere
+
+set showmatch " show matching brackets
+set hlsearch
+set incsearch " highlight as type
+set scrolloff=5 " keep 5 lines (top/bottom) for scope
+set sidescrolloff=5 " keep 5 lines at the side
+set visualbell " blink instead beep
+set laststatus=2 " always show the status line
+"set statusline=%f%m%r%h%w\ %p%%\ %v:%l/%L%=%{&ft}\ %{coc#status()}\ 
+set statusline=%f%m%r%h%w%{GitBranch()}%p%%\ %v:%l/%L%=%{&ft}\ %{coc#status()}\ 
+
+function! GitBranch()
+  let b:gitbranch=fugitive#head()
+  return strlen(b:gitbranch) > 0?' ('.b:gitbranch.') ':' '
+endfunction
+
+" highlight the cursor current line in current window
+autocmd WinEnter,BufEnter * setlocal cursorline
+autocmd WinLeave * setlocal nocursorline
+highlight CursorLine ctermbg=NONE cterm=NONE guibg=NONE
+highlight CursorLineNr term=bold cterm=bold gui=bold
+
+set list listchars=tab:→\ ,trail:· " mark tab and trailing white space
+match ErrorMsg '\s\+$' " mark trailing spaces as error
 " }
 
 " Mappings {
