@@ -95,10 +95,10 @@ nmap <silent> gt <Plug>(coc-type-definition)
 nmap <silent> gi <Plug>(coc-implementation)
 nmap <silent> gr <Plug>(coc-references)
 
-" Use `kp` and `kn` for navigate diagnostics
-nmap <silent> <Leader>kp <Plug>(coc-diagnostic-prev)
-nmap <silent> <Leader>kn <Plug>(coc-diagnostic-next)
-nmap <silent> <Leader>kr <Plug>(coc-rename)
+" Use `,j` and `,k` for navigate diagnostics
+nmap <silent> <Leader>k <Plug>(coc-diagnostic-prev)
+nmap <silent> <Leader>j <Plug>(coc-diagnostic-next)
+nmap <silent> <Leader>r <Plug>(coc-rename)
 " }
 
 " denite.vim {
@@ -291,7 +291,8 @@ noremap <Leader>a ^
 noremap <Leader>e $
 noremap <Leader>s :w<CR>
 noremap <Leader>z :q<CR>
-noremap <Leader>r :NERDTreeFind<CR>
+noremap <Leader>g :e<CR>
+noremap <Leader>f :NERDTreeFind<CR>
 
 noremap <Leader>/ :nohlsearch<CR>
 " Delete current visual selection and dump in black hole buffer before pasting
