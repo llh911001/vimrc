@@ -61,7 +61,7 @@ autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isT
 " }
 
 " coc.nvim {
-let g:coc_global_extensions = ['coc-tsserver', 'coc-json', 'coc-css']
+let g:coc_global_extensions = ['coc-tsserver', 'coc-json', 'coc-css', 'coc-prettier']
 
 " use <tab> for trigger completion and navigate to next complete item
 inoremap <silent><expr> <TAB>
@@ -99,6 +99,11 @@ nmap <silent> gr <Plug>(coc-references)
 nmap <silent> <Leader>k <Plug>(coc-diagnostic-prev)
 nmap <silent> <Leader>j <Plug>(coc-diagnostic-next)
 nmap <silent> <Leader>r <Plug>(coc-rename)
+
+" coc-prettier
+command! -nargs=0 Prettier :CocCommand prettier.formatFile
+nmap <C-s> :Prettier<CR>
+vmap <C-s> <Plug>(coc-format-selected)
 " }
 
 " denite.vim {
@@ -206,11 +211,6 @@ let &t_SI="\<Esc>]50;CursorShape=1\x7"
 let &t_SR="\<Esc>]50;CursorShape=2\x7"
 let &t_EI="\<Esc>]50;CursorShape=0\x7"
 
-" Remove trailing spaces
-function! TrimTrailingSpaces()
-    %s/\s\+$//e
-endfunction
-
 " General settings {
 set updatetime=300
 set history=1000 " lines of history to remember
@@ -283,6 +283,11 @@ highlight CursorLineNr term=bold cterm=bold gui=bold
 set list listchars=tab:→\ ,trail:· " mark tab and trailing white space
 match ErrorMsg '\s\+$' " mark trailing spaces as error
 " }
+
+" Remove trailing spaces
+function! TrimTrailingSpaces()
+    %s/\s\+$//e
+endfunction
 
 " Mappings {
 noremap <Leader>t :call TrimTrailingSpaces()<CR>

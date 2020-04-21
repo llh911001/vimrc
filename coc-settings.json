@@ -2,5 +2,9 @@
   "suggest.maxCompleteItemCount": 20,
   "diagnostic.errorSign": "•",
   "diagnostic.warningSign": "•",
-  "diagnostic.infoSign": "•"
+  "diagnostic.infoSign": "•",
+  "prettier.semi": true,
+  "prettier.printWidth": 80,
+  "prettier.singleQuote": true,
+  "prettier.trailingComma": "es5"
 }
