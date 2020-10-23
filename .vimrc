@@ -21,9 +21,13 @@ Plug 'easymotion/vim-easymotion'
 
 Plug 'tpope/vim-fugitive'
 Plug 'kkoomen/vim-doge'
+Plug 'mattn/emmet-vim'
 Plug 'pangloss/vim-javascript'
 Plug 'HerringtonDarkholme/yats.vim'
 Plug 'maxmellon/vim-jsx-pretty'
+
+Plug 'dart-lang/dart-vim-plugin'
+Plug 'thosakwe/vim-flutter'
 
 " Themes
 Plug 'joshdick/onedark.vim'
@@ -61,7 +65,7 @@ autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isT
 " }
 
 " coc.nvim {
-let g:coc_global_extensions = ['coc-tsserver', 'coc-json', 'coc-css', 'coc-prettier']
+let g:coc_global_extensions = ['coc-tsserver', 'coc-json', 'coc-css', 'coc-prettier', 'coc-flutter', 'coc-word']
 
 " use <tab> for trigger completion and navigate to next complete item
 inoremap <silent><expr> <TAB>
