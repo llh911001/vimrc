@@ -21,6 +21,7 @@ Plug 'easymotion/vim-easymotion'
 Plug 'tpope/vim-fugitive'
 Plug 'kkoomen/vim-doge'
 Plug 'mattn/emmet-vim'
+Plug 'othree/xml.vim'
 Plug 'pangloss/vim-javascript'
 Plug 'HerringtonDarkholme/yats.vim'
 Plug 'maxmellon/vim-jsx-pretty'
@@ -240,6 +241,10 @@ noremap <Leader>h :tabn<CR>
 inoremap <Leader>h <esc>:tabn<CR><Insert>
 noremap <Leader>l :tabprev<CR>
 inoremap <Leader>l <ESC>tabprev<CR><Insert>
+
+" DingDing mini program
+au BufNewFile,BufRead *.axml setf xml
+au BufNewFile,BufRead *.acss setf css
 
 " Allows you to save files you opened without write permissions via sudo
 cmap w!! w !sudo tee %
