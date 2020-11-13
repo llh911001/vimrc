@@ -7,7 +7,7 @@ Web development, especially JavaScript/TypeScript + React.
 - `curl`
 - Node.js `>= 8.10.0`
 - Vim `>= 8.2`
-- pynvim(`pip3 install --user pynvim`)
+- [`Ag`](https://github.com/ggreer/the_silver_searcher) (The Silver Searcher)
 
 # Usage
 
