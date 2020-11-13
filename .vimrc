@@ -11,9 +11,8 @@ Plug 'preservim/nerdtree'
 
 Plug 'neoclide/coc.nvim', {'do': { -> coc#util#install() }}
 
-Plug 'Shougo/denite.nvim'
-Plug 'roxma/nvim-yarp'
-Plug 'roxma/vim-hug-neovim-rpc'
+Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
+Plug 'junegunn/fzf.vim'
 
 Plug 'jiangmiao/auto-pairs'
 Plug 'tpope/vim-surround'
@@ -25,16 +24,12 @@ Plug 'mattn/emmet-vim'
 Plug 'pangloss/vim-javascript'
 Plug 'HerringtonDarkholme/yats.vim'
 Plug 'maxmellon/vim-jsx-pretty'
-
 Plug 'dart-lang/dart-vim-plugin'
 Plug 'thosakwe/vim-flutter'
 
 " Themes
-Plug 'joshdick/onedark.vim'
-"Plug 'kristijanhusak/vim-hybrid-material'
-"Plug 'srcery-colors/srcery-vim'
-"Plug 'sainnhe/edge'
-"Plug 'kaicataldo/material.vim'
+Plug 'patstockwell/vim-monokai-tasty'
+"Plug 'joshdick/onedark.vim'
 
 " Initialize plugin system
 call plug#end()
@@ -43,7 +38,8 @@ syntax enable
 set termguicolors
 set background=dark
 
-colorscheme onedark
+colorscheme vim-monokai-tasty
+"colorscheme onedark
 "colorscheme hybrid_reverse
 "colorscheme srcery
 "colorscheme edge
@@ -110,85 +106,11 @@ nmap <C-s> :Prettier<CR>
 vmap <C-s> <Plug>(coc-format-selected)
 " }
 
-" denite.vim {
-call denite#custom#var('file/rec', 'command', ['ag', '--follow', '--nocolor', '--nogroup', '-g', ''])
-call denite#custom#var('grep', 'command', ['ag'])
-call denite#custom#var('grep', 'default_opts', ['-i', '--vimgrep'])
-call denite#custom#var('grep', 'recursive_opts', [])
-call denite#custom#var('grep', 'pattern_opt', [])
-call denite#custom#var('grep', 'separator', ['--'])
-call denite#custom#var('grep', 'final_opts', [])
-call denite#custom#var('buffer', 'date_format', '')
-call denite#custom#source('file_rec', 'sorters', ['sorter_sublime'])
-call denite#custom#filter('matcher_ignore_globs', 'ignore_globs',
-      \ [ '.git/', 'node_modules/', 'images/', '*.min.*', 'img/', 'fonts/', '*.png'])
-
-let s:denite_options = {'default' : {
-\ 'start_filter': 1,
-\ 'auto_resize': 1,
-\ 'source_names': 'short',
-\ 'prompt': 'λ ',
-\ 'highlight_matched_char': 'QuickFixLine',
-\ 'highlight_matched_range': 'Visual',
-\ 'highlight_window_background': 'Visual',
-\ 'highlight_filter_background': 'DiffAdd',
-\ 'winrow': 1,
-\ 'vertical_preview': 1
-\ }}
-
-function! s:profile(opts) abort
-  for l:fname in keys(a:opts)
-    for l:dopt in keys(a:opts[l:fname])
-      call denite#custom#option(l:fname, l:dopt, a:opts[l:fname][l:dopt])
-    endfor
-  endfor
-endfunction
-
-call s:profile(s:denite_options)
-
-nmap <C-p> :Denite -start-filter file/rec<CR>
-nmap <Leader>b :Denite buffer<CR>
-nnoremap \ :Denite grep<CR>
-
-autocmd FileType denite-filter call s:denite_filter_my_settings()
-function! s:denite_filter_my_settings() abort
-  imap <silent><buffer> <Esc>
-  \ <Plug>(denite_filter_quit)
-  nnoremap <silent><buffer><expr> <Esc>
-  \ denite#do_map('quit')
-  inoremap <silent><buffer><expr> <CR>
-  \ denite#do_map('do_action')
-  inoremap <silent><buffer><expr> <C-t>
-  \ denite#do_map('do_action', 'tabopen')
-  inoremap <silent><buffer><expr> <C-v>
-  \ denite#do_map('do_action', 'vsplit')
-  inoremap <silent><buffer><expr> <C-h>
-  \ denite#do_map('do_action', 'split')
-endfunction
-
-autocmd FileType denite call s:denite_my_settings()
-function! s:denite_my_settings() abort
-  nnoremap <silent><buffer><expr> <CR>
-  \ denite#do_map('do_action')
-  nnoremap <silent><buffer><expr> q
-  \ denite#do_map('quit')
-  nnoremap <silent><buffer><expr> <Esc>
-  \ denite#do_map('quit')
-  nnoremap <silent><buffer><expr> d
-  \ denite#do_map('do_action', 'delete')
-  nnoremap <silent><buffer><expr> p
-  \ denite#do_map('do_action', 'preview')
-  nnoremap <silent><buffer><expr> i
-  \ denite#do_map('open_filter_buffer')
-  nnoremap <silent><buffer><expr> <C-o>
-  \ denite#do_map('open_filter_buffer')
-  nnoremap <silent><buffer><expr> <C-t>
-  \ denite#do_map('do_action', 'tabopen')
-  nnoremap <silent><buffer><expr> <C-v>
-  \ denite#do_map('do_action', 'vsplit')
-  nnoremap <silent><buffer><expr> <C-h>
-  \ denite#do_map('do_action', 'split')
-endfunction
+" fzf {
+nmap <C-p> :Files<CR>
+nmap <Leader>b :Buffers<CR>
+nnoremap \ :Ag<CR>
+command! -bang -nargs=* Ag call fzf#vim#ag(<q-args>, fzf#vim#with_preview({'options': '--delimiter : --nth 4..'}), <bang>0)
 " }
 
 " vim-doge {
