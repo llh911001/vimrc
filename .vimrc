@@ -40,12 +40,6 @@ set background=dark
 
 colorscheme vim-monokai-tasty
 "colorscheme onedark
-"colorscheme hybrid_reverse
-"colorscheme srcery
-"colorscheme edge
-"let g:material_terminal_italics=1
-"let g:material_theme_style='darker'
-"colorscheme material
 
 set encoding=utf-8
 let mapleader=","
