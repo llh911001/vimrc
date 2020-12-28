@@ -175,7 +175,7 @@ set numberwidth=4
 set lazyredraw " do not redraw while running macros (much faster) (LazyRedraw)
 set hidden " change buffer without saving
 set backspace=indent,eol,start " make backspace work normal
-set whichwrap+=<,>,[,],b,s  " backspace and cursor keys wrap to
+set whichwrap+=<,>,h,l,[,]  " keys wrap
 set printoptions+=syntax:y " syntax when printing
 "set mouse=a " use mouse everywhere
 
