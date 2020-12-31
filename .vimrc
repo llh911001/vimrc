@@ -101,6 +101,7 @@ vmap <C-s> <Plug>(coc-format-selected)
 " }
 
 " fzf {
+let $FZF_DEFAULT_COMMAND = 'ag -l --nocolor --hidden --ignore .git --ignore node_modules'
 nmap <C-p> :Files<CR>
 nmap <Leader>b :Buffers<CR>
 nnoremap \ :Ag<CR>
