@@ -53,7 +53,7 @@ autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isT
 " }
 
 " coc.nvim {
-let g:coc_global_extensions = ['coc-tsserver', 'coc-json', 'coc-css', 'coc-prettier', 'coc-flutter', 'coc-word']
+let g:coc_global_extensions = ['coc-tsserver', 'coc-json', 'coc-css', 'coc-prettier', 'coc-word']
 
 " use <tab> for trigger completion and navigate to next complete item
 inoremap <silent><expr> <TAB>
