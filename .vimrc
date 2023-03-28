@@ -24,8 +24,6 @@ Plug 'mattn/emmet-vim'
 Plug 'pangloss/vim-javascript'
 Plug 'HerringtonDarkholme/yats.vim'
 Plug 'maxmellon/vim-jsx-pretty'
-Plug 'dart-lang/dart-vim-plugin'
-Plug 'thosakwe/vim-flutter'
 
 " Themes
 Plug 'patstockwell/vim-monokai-tasty'
@@ -188,12 +186,7 @@ set sidescrolloff=5 " keep 5 lines at the side
 set visualbell " blink instead beep
 set laststatus=2 " always show the status line
 "set statusline=%f%m%r%h%w\ %p%%\ %v:%l/%L%=%{&ft}\ %{coc#status()}\ 
-set statusline=%f%m%r%h%w%{GitBranch()}%p%%\ %v:%l/%L%=%{&ft}\ %{coc#status()}\ 
-
-function! GitBranch()
-  let b:gitbranch=fugitive#head()
-  return strlen(b:gitbranch) > 0?' ('.b:gitbranch.') ':' '
-endfunction
+set statusline=%f%m%r%h%w\ %{FugitiveStatusline()}\ %p%%\ %v:%l/%L%=%{&ft}\ %{coc#status()}\ 
 
 " highlight the cursor current line in current window
 autocmd WinEnter,BufEnter * setlocal cursorline
