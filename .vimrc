@@ -67,9 +67,9 @@ inoremap <expr><S-TAB> coc#pum#visible() ? coc#pum#prev(1) : "\<C-h>"
 inoremap <silent><expr> <CR> coc#pum#visible() ? coc#pum#confirm()
                               \: "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
 
-function! s:check_back_space() abort
+function! CheckBackspace() abort
   let col = col('.') - 1
-  return !col || getline('.')[col - 1]  =~ '\s'
+  return !col || getline('.')[col - 1]  =~# '\s'
 endfunction
 
 " Use K to show documentation in preview window
@@ -89,9 +89,11 @@ nmap <silent> gt <Plug>(coc-type-definition)
 nmap <silent> gi <Plug>(coc-implementation)
 nmap <silent> gr <Plug>(coc-references)
 
-" Use `,j` and `,k` for navigate diagnostics
-nmap <silent> <Leader>k <Plug>(coc-diagnostic-prev)
-nmap <silent> <Leader>j <Plug>(coc-diagnostic-next)
+" Diagnostics navigate
+nmap <silent> g] <Plug>(coc-diagnostic-next)
+nmap <silent> g[ <Plug>(coc-diagnostic-prev)
+nmap <silent> gj <Plug>(coc-diagnostic-next-error)
+nmap <silent> gk <Plug>(coc-diagnostic-prev-error)
 nmap <silent> <Leader>r <Plug>(coc-rename)
 
 " coc-prettier

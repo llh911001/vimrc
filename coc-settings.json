@@ -1,10 +1,12 @@
 {
-  "suggest.maxCompleteItemCount": 20,
   "diagnostic.errorSign": "•",
   "diagnostic.warningSign": "•",
   "diagnostic.infoSign": "•",
+  "diagnostic.hintSign": "•",
+  "suggest.noselect": true,
+  "suggest.maxCompleteItemCount": 64,
   "prettier.semi": true,
-  "prettier.printWidth": 80,
+  "prettier.printWidth": 100,
   "prettier.singleQuote": true,
   "prettier.trailingComma": "es5"
 }
