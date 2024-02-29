@@ -8,5 +8,8 @@
   "prettier.semi": true,
   "prettier.printWidth": 100,
   "prettier.singleQuote": true,
-  "prettier.trailingComma": "es5"
+  "prettier.trailingComma": "es5",
+  "css.completion.completePropertyWithSemicolon": false,
+  "scss.completion.completePropertyWithSemicolon": false,
+  "less.completion.completePropertyWithSemicolon": false
 }
