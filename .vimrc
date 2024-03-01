@@ -17,6 +17,7 @@ Plug 'junegunn/fzf.vim'
 Plug 'jiangmiao/auto-pairs'
 Plug 'tpope/vim-surround'
 Plug 'easymotion/vim-easymotion'
+Plug 'andymass/vim-matchup'
 
 Plug 'tpope/vim-fugitive'
 Plug 'kkoomen/vim-doge'
