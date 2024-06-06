@@ -34,6 +34,7 @@ Plug 'patstockwell/vim-monokai-tasty'
 call plug#end()
 
 syntax enable
+set re=0 " Use new regular expression engine
 set termguicolors
 set background=dark
 
