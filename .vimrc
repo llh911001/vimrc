@@ -201,6 +201,10 @@ autocmd WinLeave * setlocal nocursorline
 highlight CursorLine ctermbg=NONE cterm=NONE guibg=NONE
 highlight CursorLineNr term=bold cterm=bold gui=bold
 
+" respect the transparency settings in terminal, like iTerm2
+highlight Normal guibg=NONE ctermbg=NONE
+highlight NonText guibg=NONE ctermbg=NONE
+
 set list listchars=tab:→\ ,trail:· " mark tab and trailing white space
 match ErrorMsg '\s\+$' " mark trailing spaces as error
 " }
