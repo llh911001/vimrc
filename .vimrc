@@ -25,6 +25,7 @@ Plug 'mattn/emmet-vim'
 Plug 'pangloss/vim-javascript'
 Plug 'HerringtonDarkholme/yats.vim'
 Plug 'maxmellon/vim-jsx-pretty'
+Plug 'ap/vim-css-color'
 
 " Themes
 Plug 'patstockwell/vim-monokai-tasty'
